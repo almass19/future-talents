@@ -190,6 +190,7 @@
     flex:0 0 128px;text-align:center;line-height:1.15;
   }
   @media (max-width:760px){ .about-side{flex-direction:column} .script-note{flex:none} }
+  @media (max-width:820px){ .about-grid{grid-template-columns:1fr} }
 
   .focus-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(2rem,4vw,4rem);align-items:center}
   .focus-copy p{color:var(--ink-soft);margin-top:1rem}
@@ -296,6 +297,7 @@
   .founding p.body{color:var(--inverse-ink-soft);margin-top:1rem;font-size:1.05rem}
   .founding .check-list li{color:var(--inverse-ink-soft)}
   .founding .check-list .icon{color:var(--accent-2)}
+  @media (max-width:760px){ .founding-grid{grid-template-columns:1fr} }
 
   .partners-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1.1rem;margin-top:2.2rem}
   .partner-card{background:var(--surface);border-radius:16px;padding:1.5rem 1.2rem;box-shadow:var(--shadow)}
