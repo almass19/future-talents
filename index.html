@@ -1,0 +1,867 @@
+<title>Future Talent Association</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Caveat:wght@600;700&display=swap">
+
+<style>
+  :root{
+    --bg:#F5F1E6;
+    --surface:#FFFFFF;
+    --surface-2:#EFE7D2;
+    --ink:#0B1830;
+    --ink-soft:#545E77;
+    --ink-faint:#848CA4;
+    --border:#E5DCC6;
+    --accent:#1E4FE0;
+    --accent-2:#12339C;
+    --accent-soft:#E7ECFB;
+    --on-accent:#FFFFFF;
+    --inverse-bg:#0E1C3B;
+    --inverse-surface:#152A54;
+    --inverse-ink:#F5F1E6;
+    --inverse-ink-soft:#AEB8D4;
+    --inverse-border:rgba(245,241,230,.16);
+    --shadow:0 20px 45px -22px rgba(11,24,48,.35);
+    --radius:20px;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans',-apple-system,'Segoe UI',Arial,sans-serif;
+    font-size:1rem;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
+  h1,h2,h3{
+    font-family:'Archivo',Arial,sans-serif;
+    color:var(--ink);
+    line-height:1.08;
+    margin:0;
+    text-wrap:balance;
+    letter-spacing:-.01em;
+  }
+  p{margin:0}
+  a{color:inherit}
+  img{display:block}
+  .eyebrow{
+    font-family:'IBM Plex Sans',sans-serif;
+    font-size:.76rem;
+    font-weight:700;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--accent);
+    display:inline-flex;
+    align-items:center;
+    gap:.6em;
+  }
+  .eyebrow::after{ content:""; width:2.2em; height:1px; background:var(--accent); display:inline-block; opacity:.55 }
+  .wrap{ max-width:1240px; margin-inline:auto; padding-inline:clamp(20px,5vw,64px); }
+  .icon{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+  .btn{
+    font-family:'IBM Plex Sans',sans-serif;
+    font-size:.88rem;
+    font-weight:600;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    gap:.55em;
+    padding:.85em 1.5em;
+    border:1.5px solid transparent;
+    border-radius:999px;
+    cursor:pointer;
+    transition:transform .15s ease,background-color .15s ease,color .15s ease,border-color .15s ease,box-shadow .15s ease;
+  }
+  @media (prefers-reduced-motion:no-preference){ .btn:hover{transform:translateY(-2px)} }
+  .btn-primary{background:var(--accent);color:var(--on-accent);box-shadow:0 14px 30px -14px rgba(30,79,224,.65)}
+  .btn-primary:hover{background:var(--accent-2)}
+  .btn-outline{background:var(--surface);color:var(--accent);border-color:var(--accent)}
+  .btn-outline:hover{background:var(--accent-soft)}
+  .btn-ghost{background:transparent;color:var(--ink);border-color:var(--border)}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+  .btn-on-dark{background:transparent;color:var(--inverse-ink);border-color:var(--inverse-border)}
+  .btn-on-dark:hover{border-color:var(--accent-2);color:var(--accent-2)}
+  .btn .icon{width:1.05em;height:1.05em}
+
+  .link-arrow{
+    display:inline-flex;align-items:center;gap:.5em;text-decoration:none;color:var(--accent);
+    font-weight:600;font-size:.94rem;
+  }
+  .link-arrow .icon{width:1.05em;height:1.05em;transition:transform .15s ease}
+  @media (prefers-reduced-motion:no-preference){ .link-arrow:hover .icon{transform:translateX(3px)} }
+
+  /* nav */
+  .nav{
+    position:sticky;top:env(safe-area-inset-top,0px);z-index:40;
+    background:color-mix(in srgb, var(--bg) 90%, transparent);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-row{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;padding-block:.7rem}
+  .brand{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+  .brand-mark{ display:flex; align-items:center; }
+  .brand-mark img{height:34px;width:auto}
+  .foot-logo{display:flex;align-items:center;gap:.75rem}
+  .foot-logo img{height:42px;width:auto}
+  .foot-wordmark{font-family:'Archivo',sans-serif;font-weight:800;font-size:1.05rem;line-height:1.15;color:var(--inverse-ink);letter-spacing:.01em}
+  .foot-wordmark span{display:block;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:.62rem;letter-spacing:.16em;color:var(--accent-2);margin-top:.25rem}
+  .nav-links{display:flex;align-items:center;gap:1.9rem;list-style:none;margin:0;padding:0}
+  .nav-links a{ text-decoration:none;color:var(--ink-soft);font-size:.92rem;font-weight:500; transition:color .15s ease; }
+  .nav-links a:hover{color:var(--accent)}
+  .nav-cta{display:flex;align-items:center;gap:.9rem}
+  .lang{ font-family:'IBM Plex Sans',sans-serif;font-size:.85rem;font-weight:600;color:var(--ink-soft);
+    display:inline-flex;align-items:center;gap:.3em; }
+  .lang .icon{width:14px;height:14px}
+  .nav-toggle{display:none;background:none;border:0;color:var(--ink);padding:.4rem;cursor:pointer}
+  .nav-toggle .icon{width:24px;height:24px}
+  .mobile-panel{display:none}
+  @media (max-width:960px){
+    .nav-links{display:none}
+    .nav-cta .btn-outline,.nav-cta .lang{display:none}
+    .nav-toggle{display:inline-flex}
+    .mobile-panel[data-open="true"]{
+      display:flex;flex-direction:column;gap:1.1rem;
+      padding:1.4rem clamp(20px,5vw,64px) 1.8rem;
+      border-top:1px solid var(--border); background:var(--bg);
+    }
+    .mobile-panel a{text-decoration:none;color:var(--ink);font-size:1.05rem;font-weight:600}
+    .mobile-panel .btn{align-self:flex-start}
+  }
+
+  main{overflow-x:clip}
+  section{position:relative}
+
+  /* hero */
+  .hero-banner{ position:relative; overflow:hidden; min-height:clamp(460px,62vw,620px); display:flex; align-items:center; }
+  .hero-banner img.hero-photo{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
+  .hero-banner::before{
+    content:""; position:absolute; inset:0; z-index:1;
+    background:linear-gradient(100deg, var(--bg) 0%, var(--bg) 30%, color-mix(in srgb, var(--bg) 35%, transparent) 52%, transparent 68%);
+  }
+  .hero-banner::after{
+    content:""; position:absolute; inset:0; z-index:1;
+    clip-path:polygon(76% 0,100% 0,100% 100%,64% 100%);
+    background:linear-gradient(155deg,var(--accent),var(--accent-2));
+    opacity:.9;
+  }
+  .hero-inner{ position:relative; z-index:2; width:100%; padding-block:clamp(2.5rem,5vw,3.5rem); }
+  .hero-copy{max-width:560px}
+  .hero-copy h1{font-size:clamp(2.3rem,1.8rem + 2.2vw,3.6rem);font-weight:800;margin-block:.9rem .9rem}
+  .hero-copy p{color:var(--ink-soft);font-size:1.05rem;max-width:44ch}
+  .hero-ctas{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:1.7rem}
+
+  .stake-strip{border-bottom:1px solid var(--border)}
+  .stake-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem}
+  .stake-item{ display:flex;align-items:flex-start;gap:.8rem;padding:1.8rem 0; text-decoration:none;color:inherit; }
+  .stake-item .icon-badge{
+    width:44px;height:44px;border-radius:12px;background:var(--accent-soft);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .stake-item .icon-badge .icon{width:22px;height:22px}
+  .stake-item strong{display:block;font-size:.98rem;font-weight:700}
+  .stake-item span{color:var(--ink-faint);font-size:.85rem}
+  @media (max-width:760px){ .stake-grid{grid-template-columns:repeat(2,1fr)} }
+
+  .section{padding-block:clamp(3.2rem,6vw,6rem)}
+  .section-head{max-width:60ch;margin-bottom:clamp(2rem,4vw,3rem)}
+  .section-head h2{font-size:clamp(1.9rem,1.5rem + 1.7vw,2.7rem);font-weight:800;margin-top:.7rem}
+  .section-head p{color:var(--ink-soft);margin-top:.9rem;font-size:1.02rem}
+
+  .about-grid{display:grid;grid-template-columns:1.15fr .95fr;gap:clamp(2rem,4vw,4rem);align-items:start}
+  .about-copy p{color:var(--ink-soft);margin-top:1rem}
+  .about-side{display:flex;gap:1.6rem;align-items:center}
+  .stat-box{
+    flex:1;background:var(--accent-soft);border-radius:var(--radius);padding:1.5rem 1.6rem;box-shadow:var(--shadow);
+  }
+  .stat-row{display:flex;align-items:flex-start;gap:1.1rem;padding-block:1rem;border-bottom:1px solid rgba(30,79,224,.14)}
+  .stat-row:last-child{border-bottom:0;padding-bottom:.2rem}
+  .stat-row:first-child{padding-top:.2rem}
+  .stat-num{font-family:'Archivo',sans-serif;font-weight:900;font-size:2rem;color:var(--accent);line-height:1;min-width:2.2ch}
+  .stat-copy strong{display:block;font-size:.94rem;font-weight:700}
+  .stat-copy span{color:var(--ink-soft);font-size:.82rem}
+  .script-note{
+    font-family:'Caveat',cursive;font-weight:700;font-size:1.7rem;color:var(--accent);
+    flex:0 0 128px;text-align:center;line-height:1.15;
+  }
+  @media (max-width:760px){ .about-side{flex-direction:column} .script-note{flex:none} }
+
+  .focus-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(2rem,4vw,4rem);align-items:center}
+  .focus-copy p{color:var(--ink-soft);margin-top:1rem}
+  .focus-copy .link-arrow{margin-top:1.4rem}
+  .focus-photo{ position:relative; border-radius:var(--radius); overflow:hidden; aspect-ratio:16/10.5; box-shadow:var(--shadow); }
+  .focus-photo img{width:100%;height:100%;object-fit:cover}
+  .focus-photo::after{
+    content:""; position:absolute; inset:0;
+    clip-path:polygon(58% 0,100% 0,100% 100%,44% 100%);
+    background:linear-gradient(155deg,var(--accent),var(--accent-2)); opacity:.85;
+  }
+  .focus-caption{
+    position:absolute; left:1.6rem; bottom:1.6rem; z-index:2; color:#fff;
+    font-family:'IBM Plex Sans',sans-serif; font-weight:700; letter-spacing:.12em; font-size:.85rem;
+    text-transform:uppercase; line-height:1.7;
+  }
+  .focus-caption .rule{width:2.4rem;height:2px;background:#fff;opacity:.8;margin-top:.4rem}
+  @media (max-width:820px){ .focus-grid{grid-template-columns:1fr} }
+
+  .process{ position:relative; display:flex; gap:2.2rem; margin-top:2.2rem; padding-top:1.6rem; }
+  .process::before{content:"";position:absolute;top:23px;left:0;right:0;height:1px;background:var(--border)}
+  .process-step{flex:1;min-width:150px;position:relative}
+  .step-num{
+    width:46px;height:46px;border-radius:50%;background:var(--bg);
+    border:1.5px solid var(--accent);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Archivo',sans-serif;font-weight:800;
+    margin-bottom:1rem;position:relative;z-index:1;
+  }
+  .process-step h3{font-size:1.02rem;font-weight:700;margin-bottom:.4rem}
+  .process-step p{color:var(--ink-soft);font-size:.92rem}
+  @media (max-width:900px){
+    .process{flex-direction:column;gap:1.6rem;padding-top:0}
+    .process::before{top:0;bottom:0;left:22px;right:auto;width:1px;height:auto}
+    .process-step{padding-left:3.4rem}
+    .step-num{position:absolute;left:0;top:0}
+  }
+
+  .skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem;margin-top:2.2rem}
+  .skill-card{background:var(--surface);border-radius:16px;padding:1.5rem 1.3rem;box-shadow:var(--shadow)}
+  .skill-card .icon{width:24px;height:24px;color:var(--accent);margin-bottom:.9rem}
+  .skill-card h3{font-size:.95rem;font-weight:700}
+  .skill-card p{color:var(--ink-faint);font-size:.82rem;margin-top:.4rem}
+  @media (max-width:900px){.skills-grid{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:520px){.skills-grid{grid-template-columns:1fr}}
+
+  .tabbar{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.8rem}
+  .tab-btn{
+    font-family:'IBM Plex Sans',sans-serif;font-size:.88rem;font-weight:600;
+    background:var(--surface);border:1.5px solid var(--border);color:var(--ink-soft);
+    padding:.7em 1.3em;cursor:pointer;border-radius:999px;
+    display:inline-flex;align-items:center;gap:.55em;
+    transition:background-color .15s ease,color .15s ease,border-color .15s ease;
+  }
+  .tab-btn .icon{width:16px;height:16px}
+  .tab-btn[aria-selected="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+  .tab-btn:not([aria-selected="true"]):hover{border-color:var(--accent);color:var(--accent)}
+  .tab-panel{
+    margin-top:2.2rem;display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,4vw,3.5rem);
+    background:var(--surface);border-radius:var(--radius);padding:clamp(1.8rem,3vw,3rem);box-shadow:var(--shadow);
+  }
+  .tab-panel p.lede{font-size:1.08rem;color:var(--ink-soft)}
+  .tab-panel .pull{
+    margin-top:1.2rem;font-family:'Archivo',sans-serif;font-weight:700;font-size:1.25rem;
+    color:var(--accent);border-left:3px solid var(--accent);padding-left:1rem;
+  }
+  .tab-panel .btn{margin-top:1.6rem}
+  .check-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.75rem}
+  .check-list li{display:flex;gap:.7rem;align-items:flex-start;font-size:.94rem;color:var(--ink-soft)}
+  .check-list .icon{width:18px;height:18px;color:var(--accent);margin-top:.15rem;flex-shrink:0}
+  @media (max-width:760px){.tab-panel{grid-template-columns:1fr}}
+
+  .flow{display:flex;flex-wrap:wrap;gap:1.1rem;margin-top:2rem}
+  .flow-step{flex:1;min-width:200px;padding:1.6rem 1.4rem;border-radius:16px;background:var(--surface);box-shadow:var(--shadow)}
+  .flow-step .step-num{margin-bottom:.9rem;width:38px;height:38px;font-size:.85rem}
+  .flow-step h3{font-size:.98rem;font-weight:700}
+  .flow-step p{color:var(--ink-soft);font-size:.88rem;margin-top:.4rem}
+
+  .tag-row{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.6rem}
+  .tag{ font-family:'IBM Plex Sans',sans-serif;font-size:.82rem;font-weight:500;color:var(--ink-soft);
+    background:var(--surface-2);padding:.5em 1em;border-radius:999px; }
+  .result-line{ margin-top:1.6rem;font-weight:700;font-size:1.05rem;color:var(--ink);font-family:'Archivo',sans-serif; }
+
+  .formats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem;margin-top:2.2rem}
+  .format-card{background:var(--surface);border-radius:16px;padding:1.5rem 1.3rem;display:flex;flex-direction:column;gap:.7rem;box-shadow:var(--shadow)}
+  .format-card .icon{width:22px;height:22px;color:var(--accent)}
+  .format-card h3{font-size:.92rem;font-weight:700}
+  .format-card p{color:var(--ink-faint);font-size:.8rem}
+  @media (max-width:900px){.formats-grid{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:520px){.formats-grid{grid-template-columns:1fr}}
+
+  .research-strip{
+    margin-top:clamp(2.5rem,4vw,4rem);display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;
+    align-items:center;background:var(--surface-2);border-radius:var(--radius);padding:clamp(1.8rem,3vw,2.8rem);
+  }
+  .research-strip ul{margin:1rem 0 0;padding-left:1.1rem;color:var(--ink-soft);font-size:.92rem;display:flex;flex-direction:column;gap:.4rem}
+  @media (max-width:760px){.research-strip{grid-template-columns:1fr}}
+
+  .founding{background:var(--inverse-bg);color:var(--inverse-ink)}
+  .founding .eyebrow{color:var(--accent-2)}
+  .founding .eyebrow::after{background:var(--accent-2)}
+  .founding h2{color:var(--inverse-ink)}
+  .founding-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,4vw,4rem);align-items:start}
+  .founding p.body{color:var(--inverse-ink-soft);margin-top:1rem;font-size:1.05rem}
+  .founding .check-list li{color:var(--inverse-ink-soft)}
+  .founding .check-list .icon{color:var(--accent-2)}
+
+  .partners-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1.1rem;margin-top:2.2rem}
+  .partner-card{background:var(--surface);border-radius:16px;padding:1.5rem 1.2rem;box-shadow:var(--shadow)}
+  .partner-card .icon{width:24px;height:24px;color:var(--accent);margin-bottom:.8rem}
+  .partner-card h3{font-size:.92rem;font-weight:700}
+  .partner-card p{color:var(--ink-faint);font-size:.8rem;margin-top:.4rem}
+  @media (max-width:980px){.partners-grid{grid-template-columns:repeat(3,1fr)}}
+  @media (max-width:600px){.partners-grid{grid-template-columns:repeat(2,1fr)}}
+
+  .geo-route{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem;margin-top:2.2rem;font-family:'IBM Plex Sans',sans-serif;font-size:.9rem;font-weight:600}
+  .geo-route span.city{background:var(--accent-soft);color:var(--accent);padding:.5em 1.1em;border-radius:999px}
+  .geo-route .icon{width:16px;height:16px;color:var(--ink-faint)}
+  .geo-note{margin-top:1.3rem;color:var(--ink-soft);max-width:60ch;font-size:.95rem}
+
+  .forum-strip{
+    margin-top:clamp(2.5rem,4vw,4rem);border-radius:var(--radius);padding:clamp(1.8rem,3vw,2.8rem);
+    display:grid;grid-template-columns:auto 1fr;gap:1.8rem;align-items:start;
+    background:linear-gradient(135deg,var(--accent-soft),transparent 65%);box-shadow:var(--shadow);
+  }
+  .forum-strip .icon{width:38px;height:38px;color:var(--accent)}
+  .forum-strip h3{font-size:1.3rem;font-weight:800}
+  .forum-strip p{color:var(--ink-soft);margin-top:.5rem;max-width:60ch}
+  @media (max-width:600px){.forum-strip{grid-template-columns:1fr}}
+
+  .cta-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem;margin-top:2.4rem}
+  .cta-card{background:var(--surface);border-radius:16px;padding:1.6rem 1.3rem;display:flex;flex-direction:column;gap:.9rem;box-shadow:var(--shadow)}
+  .cta-card .icon-badge{width:40px;height:40px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center}
+  .cta-card .icon-badge .icon{width:20px;height:20px}
+  .cta-card h3{font-size:1rem;font-weight:700}
+  .cta-card p{color:var(--ink-soft);font-size:.88rem;flex:1}
+  @media (max-width:900px){.cta-grid{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:520px){.cta-grid{grid-template-columns:1fr}}
+
+  footer{background:var(--inverse-bg);color:var(--inverse-ink-soft);border-top:1px solid var(--inverse-border)}
+  .foot-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:2.5rem;padding-block:clamp(2.5rem,4vw,4rem)}
+  .foot-brand p{margin-top:1rem;max-width:32ch;font-size:.9rem}
+  .foot-brand .brand-mark{background:var(--inverse-surface)}
+  .foot-col h4{font-family:'IBM Plex Sans',sans-serif;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-2);margin:0 0 1rem}
+  .foot-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.65rem}
+  .foot-col a{text-decoration:none;color:var(--inverse-ink-soft);font-size:.9rem;transition:color .15s ease}
+  .foot-col a:hover{color:var(--inverse-ink)}
+  .foot-col li{display:flex;align-items:center;gap:.55em;font-size:.9rem}
+  .foot-col li .icon{width:16px;height:16px;color:var(--accent-2);flex-shrink:0}
+  .foot-bottom{border-top:1px solid var(--inverse-border);padding-block:1.4rem;font-size:.8rem;display:flex;flex-wrap:wrap;gap:.6rem;justify-content:space-between}
+  @media (max-width:820px){.foot-grid{grid-template-columns:1fr 1fr}}
+  @media (max-width:520px){.foot-grid{grid-template-columns:1fr}}
+</style>
+
+<svg style="display:none">
+  <defs>
+    <symbol id="i-cap" viewBox="0 0 24 24"><path d="M2 9 12 4l10 5-10 5L2 9Z"/><path d="M6 11v4c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-4"/><path d="M20 9v6"/></symbol>
+    <symbol id="i-columns" viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M4 21V10l8-5 8 5v11"/><path d="M9 21v-7"/><path d="M15 21v-7"/></symbol>
+    <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="12" rx="1"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="18" cy="9" r="2.2"/><path d="M15.6 20c.2-2.4 1.7-4.4 3.8-5.2"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.6-4.6"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M9.5 14.5 14.5 9.5"/><path d="M8 16l-2.5 2.5a3.5 3.5 0 0 1-5-5L3 11"/><path d="M16 8l2.5-2.5a3.5 3.5 0 0 1 5 5L21 13"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 2l2 6 6 2-6 2-2 6-2-6-6-2 6-2 2-6Z"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 13l9 5 9-5"/></symbol>
+    <symbol id="i-community" viewBox="0 0 24 24"><circle cx="7" cy="9" r="2.5"/><circle cx="17" cy="9" r="2.5"/><path d="M2.5 19c.4-2.8 2.3-5 4.5-5s4.1 2.2 4.5 5"/><path d="M12.5 19c.4-2.8 2.3-5 4.5-5s4.1 2.2 4.5 5"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1.1 2.2h5c.1-1 .5-1.7 1.1-2.2A6 6 0 0 0 12 3Z"/></symbol>
+    <symbol id="i-chip" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v10H9l-4 4V5Z"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 3v18"/><path d="M5 4h11l-2.5 3.5L16 11H5"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4"/><path d="M4 20h16"/><path d="M8 16v-4"/><path d="M12.5 16V8"/><path d="M17 16v-7"/></symbol>
+    <symbol id="i-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v9"/><path d="M15 9.8c0-1.3-1.3-2.3-3-2.3s-3 .9-3 2.1c0 1.2 1 1.7 3 2.1 2 .4 3 .9 3 2.1 0 1.2-1.3 2.1-3 2.1s-3-1-3-2.3"/></symbol>
+    <symbol id="i-loop" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13.7-5.7L20 8"/><path d="M20 4v4h-4"/><path d="M20 12a8 8 0 0 1-13.7 5.7L4 16"/><path d="M4 20v-4h4"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/><path d="M9 21h6"/></symbol>
+    <symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="1.5"/><path d="M9 4V3h6v1"/><path d="M9 11l2 2 4-4"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="1.5"/><path d="M3 9.5h18"/><path d="M8 3v4M16 3v4"/></symbol>
+    <symbol id="i-tool" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 1-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 1 5.4-5.4L14.7 6.3Z"/></symbol>
+    <symbol id="i-handshake" viewBox="0 0 24 24"><path d="M2 12l4-3 3 2 3-2 4 3"/><path d="M9 11l3 4 3-2 3 3"/><path d="M15 15l-2 2"/></symbol>
+    <symbol id="i-network" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M7.5 7.3 10.6 16"/><path d="M16.5 7.3 13.4 16"/><path d="M8 6h8"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4h8v4a4 4 0 0 1-8 0V4Z"/><path d="M6 5H4v2a3 3 0 0 0 3 3"/><path d="M18 5h2v2a3 3 0 0 1-3 3"/><path d="M12 12v4"/><path d="M9 20h6"/><path d="M10 16.5h4v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-2Z"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5 5 19"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16M14 6l6 6-6 6"/></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.5 7-11a7 7 0 1 0-14 0c0 4.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3 6l9 7 9-7"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 13l4 4 12-12"/></symbol>
+  </defs>
+</svg>
+
+<header class="nav">
+  <div class="wrap nav-row">
+    <a class="brand" href="#top">
+      <span class="brand-mark"><img src="logo-full.png" alt="Future Talent Association"></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#top">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#programs">Programs</a></li>
+      <li><a href="#partners">Partnerships</a></li>
+      <li><a href="#forum">News &amp; Events</a></li>
+      <li><a href="mailto:hello@futuretalent.kz">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <span class="lang">EN<svg class="icon"><use href="#i-chevron-down"/></svg></span>
+      <a class="btn btn-outline" href="#programs">Join Us<svg class="icon"><use href="#i-arrow"/></svg></a>
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mobilePanel" aria-label="Open menu">
+        <svg class="icon" id="navToggleIcon"><use href="#i-menu"/></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-panel" id="mobilePanel" data-open="false">
+    <a href="#top">Home</a>
+    <a href="#about">About</a>
+    <a href="#programs">Programs</a>
+    <a href="#partners">Partnerships</a>
+    <a href="#forum">News &amp; Events</a>
+    <a href="mailto:hello@futuretalent.kz">Contact</a>
+    <a class="btn btn-primary" href="#programs">Join Us<svg class="icon"><use href="#i-arrow"/></svg></a>
+  </nav>
+</header>
+
+<main>
+
+  <section id="top" class="hero-banner">
+    <img class="hero-photo" src="hero-classroom.jpg" alt="A speaker presenting to engaged students in a modern lecture hall">
+    <div class="wrap hero-inner">
+      <div class="hero-copy">
+        <span class="eyebrow">Empowering talent · Building tomorrow</span>
+        <h1>Future Talent Association</h1>
+        <p>Connecting students, universities, business and experts to create real opportunities and shape the future of work.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="#about">Discover Our Mission<svg class="icon"><use href="#i-arrow"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stake-strip">
+    <div class="wrap stake-grid">
+      <a class="stake-item" href="#programs" data-goto-tab="students">
+        <span class="icon-badge"><svg class="icon"><use href="#i-cap"/></svg></span>
+        <span><strong>Students</strong><span>Skills. Experience. Career.</span></span>
+      </a>
+      <a class="stake-item" href="#programs" data-goto-tab="universities">
+        <span class="icon-badge"><svg class="icon"><use href="#i-columns"/></svg></span>
+        <span><strong>Universities</strong><span>Partnerships. Development. Impact.</span></span>
+      </a>
+      <a class="stake-item" href="#programs" data-goto-tab="companies">
+        <span class="icon-badge"><svg class="icon"><use href="#i-briefcase"/></svg></span>
+        <span><strong>Business</strong><span>Talent. Projects. Growth.</span></span>
+      </a>
+      <a class="stake-item" href="#programs" data-goto-tab="experts">
+        <span class="icon-badge"><svg class="icon"><use href="#i-users"/></svg></span>
+        <span><strong>Experts</strong><span>Knowledge. Mentorship. Influence.</span></span>
+      </a>
+    </div>
+  </section>
+
+  <section id="about" class="section" aria-labelledby="about-h">
+    <div class="wrap about-grid">
+      <div class="about-copy">
+        <span class="eyebrow">About us</span>
+        <h2 id="about-h">More than an association.<br>A talent ecosystem.</h2>
+        <p>Future Talent Association is a platform that unites students, universities, businesses and professionals to develop future talent through skills, research and real-world experience.</p>
+        <p>We believe in the power of collaboration — between education, industry and people — to create opportunities, drive innovation and build a stronger future for Central Asia and beyond.</p>
+        <a class="link-arrow" style="margin-top:1.3rem" href="#programs">Learn more<svg class="icon"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="about-side">
+        <div class="stat-box">
+          <div class="stat-row">
+            <span class="stat-num">4+</span>
+            <span class="stat-copy"><strong>Key stakeholders</strong><span>Students, Universities, Business, Experts</span></span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-num">3+</span>
+            <span class="stat-copy"><strong>Countries &amp; regions</strong><span>Kazakhstan and beyond</span></span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-num">1</span>
+            <span class="stat-copy"><strong>Shared goal</strong><span>Future-ready talent</span></span>
+          </div>
+        </div>
+        <p class="script-note">Together we create opportunities</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="focus-h" style="padding-top:0">
+    <div class="wrap focus-grid">
+      <div class="focus-copy">
+        <span class="eyebrow">Our focus</span>
+        <h2 id="focus-h">From potential to real opportunities</h2>
+        <p>We organize events, student projects, research initiatives and international partnerships to help young people gain skills, build networks and turn their ideas into impact.</p>
+        <a class="link-arrow" href="#programs">Explore Our Programs<svg class="icon"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="focus-photo">
+        <img src="focus-skyline.jpg" alt="Modern city skyline with the Baiterek Tower at golden hour">
+        <div class="focus-caption">Local talent.<br>Global vision.<span class="rule"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="what-we-do" class="section" aria-labelledby="wwd-h" style="background:var(--surface-2)">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">What we do</span>
+        <h2 id="wwd-h">From idea to real experience.</h2>
+        <p>Five steps that turn a professional community into practical opportunity.</p>
+      </div>
+      <div class="process">
+        <div class="process-step">
+          <div class="step-num">01</div>
+          <h3>Research</h3>
+          <p>We study students' expectations and employers' real needs.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">02</div>
+          <h3>Connect</h3>
+          <p>We build a direct dialogue between students, universities, companies and experts.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">03</div>
+          <h3>Create opportunities</h3>
+          <p>We launch practical projects, career events, meetings and educational programs.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">04</div>
+          <h3>Develop skills</h3>
+          <p>We help students build the competencies today's economy actually rewards.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">05</div>
+          <h3>Build community</h3>
+          <p>We bring active students and professionals into one long-term ecosystem.</p>
+        </div>
+      </div>
+
+      <div class="section-head" style="margin-top:clamp(3rem,5vw,4.5rem)">
+        <span class="eyebrow">Future skills</span>
+        <h2 style="font-size:clamp(1.5rem,1.2rem + 1vw,2rem)">What tomorrow's specialist actually needs.</h2>
+        <p>We think about talent development as more than technical knowledge.</p>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-card"><svg class="icon"><use href="#i-bulb"/></svg><h3>Critical Thinking</h3><p>Analyzing information and making sound decisions.</p></div>
+        <div class="skill-card"><svg class="icon"><use href="#i-chip"/></svg><h3>AI &amp; Digital Skills</h3><p>Understanding modern tools and using them effectively.</p></div>
+        <div class="skill-card"><svg class="icon"><use href="#i-chat"/></svg><h3>Communication</h3><p>Negotiation, presentation, working in a team.</p></div>
+        <div class="skill-card"><svg class="icon"><use href="#i-flag"/></svg><h3>Leadership</h3><p>Responsibility, initiative, the ability to lead.</p></div>
+        <div class="skill-card"><svg class="icon"><use href="#i-chart"/></svg><h3>Business Thinking</h3><p>Understanding how business works and where value comes from.</p></div>
+        <div class="skill-card"><svg class="icon"><use href="#i-coin"/></svg><h3>Financial Literacy</h3><p>Understanding personal finance and economic decisions.</p></div>
+        <div class="skill-card"><svg class="icon"><use href="#i-loop"/></svg><h3>Adaptability</h3><p>Learning, changing, and working through uncertainty.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="programs" class="section" aria-labelledby="prog-h">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Programs</span>
+        <h2 id="prog-h">Built around four roles.</h2>
+        <p>One ecosystem, four ways in. Choose the one that's yours.</p>
+      </div>
+
+      <div class="tabbar" role="tablist" aria-label="Choose your role">
+        <button class="tab-btn" role="tab" data-tab="students" aria-selected="true"><svg class="icon"><use href="#i-cap"/></svg>Students</button>
+        <button class="tab-btn" role="tab" data-tab="companies" aria-selected="false"><svg class="icon"><use href="#i-briefcase"/></svg>Companies</button>
+        <button class="tab-btn" role="tab" data-tab="universities" aria-selected="false"><svg class="icon"><use href="#i-columns"/></svg>Universities</button>
+        <button class="tab-btn" role="tab" data-tab="experts" aria-selected="false"><svg class="icon"><use href="#i-users"/></svg>Experts</button>
+      </div>
+
+      <div class="tab-panel" data-panel="students">
+        <div>
+          <p class="lede">Get practical experience, develop in-demand skills, meet employers and unlock opportunities for professional growth.</p>
+          <a class="btn btn-primary" href="mailto:hello@futuretalent.kz?subject=Becoming%20a%20Member">Become a Member<svg class="icon"><use href="#i-arrow"/></svg></a>
+        </div>
+        <ul class="check-list">
+          <li><svg class="icon"><use href="#i-check"/></svg>Real projects with real companies</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Meetings with companies and hiring teams</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Career opportunities as they open up</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Professional networking, early</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Future Skills development</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Participation in events and forums</li>
+        </ul>
+      </div>
+
+      <div class="tab-panel" data-panel="companies" hidden>
+        <div>
+          <p class="lede">Get direct access to future talent and take part in shaping tomorrow's workforce.</p>
+          <p class="pull">Build your talent pipeline before graduation.</p>
+          <a class="btn btn-primary" href="mailto:hello@futuretalent.kz?subject=Becoming%20a%20Corporate%20Partner">Become a Partner<svg class="icon"><use href="#i-arrow"/></svg></a>
+        </div>
+        <ul class="check-list">
+          <li><svg class="icon"><use href="#i-check"/></svg>A talent pipeline, built early</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Real business cases for student teams</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Internship and project opportunities</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Meetings with potential candidates</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Employer branding among students</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Research and feedback from the next generation</li>
+        </ul>
+      </div>
+
+      <div class="tab-panel" data-panel="universities" hidden>
+        <div>
+          <p class="lede">Create additional opportunities for your students and build systemic engagement with employers.</p>
+          <a class="btn btn-primary" href="mailto:hello@futuretalent.kz?subject=University%20Partnership">Partner Your University<svg class="icon"><use href="#i-arrow"/></svg></a>
+        </div>
+        <ul class="check-list">
+          <li><svg class="icon"><use href="#i-check"/></svg>Joint educational projects</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Research conducted among students</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Career events, on your campus</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Projects run together with companies</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Participation in inter-university initiatives</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Development of student communities</li>
+        </ul>
+      </div>
+
+      <div class="tab-panel" data-panel="experts" hidden>
+        <div>
+          <p class="lede">Share your knowledge, take part in our educational programs, and become part of a community shaping the future of the labor market.</p>
+          <a class="btn btn-primary" href="mailto:hello@futuretalent.kz?subject=Becoming%20an%20Expert">Share Your Expertise<svg class="icon"><use href="#i-arrow"/></svg></a>
+        </div>
+        <ul class="check-list">
+          <li><svg class="icon"><use href="#i-check"/></svg>Mentor a student project team</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Speak at a Future Talks session</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Judge or advise on a Business Case</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="how-it-works" class="section" aria-labelledby="hiw-h" style="background:var(--surface-2)">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">How it works</span>
+        <h2 id="hiw-h">Learning isn't enough. You have to try.</h2>
+        <p>Future Talent creates opportunities for students to work on real company projects — while they're still studying.</p>
+      </div>
+
+      <div class="flow">
+        <div class="flow-step">
+          <div class="step-num">01</div>
+          <h3>Company defines a challenge</h3>
+          <p>A real business question, not a simulation.</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">02</div>
+          <h3>Students form a team</h3>
+          <p>Self-selected, cross-university where possible.</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">03</div>
+          <h3>Work with expert feedback</h3>
+          <p>Guided by practitioners, not left alone.</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">04</div>
+          <h3>Present the result</h3>
+          <p>Back to the company that posed the challenge.</p>
+        </div>
+      </div>
+
+      <div class="tag-row" aria-label="Types of projects">
+        <span class="tag">Analytical research</span>
+        <span class="tag">Marketing projects</span>
+        <span class="tag">HR tasks</span>
+        <span class="tag">AI &amp; technology projects</span>
+        <span class="tag">Business cases</span>
+        <span class="tag">Market research</span>
+        <span class="tag">Financial projects</span>
+        <span class="tag">ESG &amp; sustainability</span>
+        <span class="tag">Product ideas</span>
+      </div>
+      <p class="result-line">Result: real experience + a portfolio project + new contacts + genuine business understanding.</p>
+
+      <div class="section-head" style="margin-top:clamp(3rem,5vw,4.5rem)">
+        <span class="eyebrow">Formats</span>
+        <h2 style="font-size:clamp(1.5rem,1.2rem + 1vw,2rem)">How you can take part.</h2>
+      </div>
+      <div class="formats-grid">
+        <div class="format-card"><svg class="icon"><use href="#i-mic"/></svg><h3>Future Talks</h3><p>Meetings between students and leaders or experts.</p></div>
+        <div class="format-card"><svg class="icon"><use href="#i-clipboard"/></svg><h3>Business Cases</h3><p>Real company challenges for student teams.</p></div>
+        <div class="format-card"><svg class="icon"><use href="#i-calendar"/></svg><h3>Career Sessions</h3><p>Career meetups and open dialogue with employers.</p></div>
+        <div class="format-card"><svg class="icon"><use href="#i-tool"/></svg><h3>Future Skills Workshops</h3><p>Hands-on sessions on in-demand skills.</p></div>
+        <div class="format-card"><svg class="icon"><use href="#i-handshake"/></svg><h3>Mentoring</h3><p>Students working directly with professionals.</p></div>
+        <div class="format-card"><svg class="icon"><use href="#i-briefcase"/></svg><h3>Company Projects</h3><p>Student project work with real businesses.</p></div>
+        <div class="format-card"><svg class="icon"><use href="#i-network"/></svg><h3>Networking Events</h3><p>Students, experts and company reps, together.</p></div>
+        <div class="format-card"><svg class="icon"><use href="#i-trophy"/></svg><h3>Future Talent Forum</h3><p>Our annual flagship gathering.</p></div>
+      </div>
+
+      <div class="research-strip">
+        <div>
+          <span class="eyebrow">Research</span>
+          <h3 style="font-family:'Archivo',sans-serif;font-size:1.4rem;font-weight:800;margin-top:.6rem">We want to hear from students.</h3>
+          <p style="color:var(--ink-soft);margin-top:.6rem">Future Talent runs research among students and employers, and results feed directly into new programs.</p>
+        </div>
+        <ul>
+          <li>What do students actually want?</li>
+          <li>What skills does business need?</li>
+          <li>How are career expectations changing?</li>
+          <li>Which competencies will matter tomorrow?</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="founding-team" class="founding section" aria-labelledby="ft-h">
+    <div class="wrap founding-grid">
+      <div>
+        <span class="eyebrow">Student Founding Team</span>
+        <h2 id="ft-h">Not just a member. A founder.</h2>
+        <p class="body">Future Talent is forming right now — and we're inviting active students to join the Student Founding Team: the group that helps shape the community's first projects and direction.</p>
+        <a class="btn btn-primary" style="margin-top:1.6rem" href="mailto:hello@futuretalent.kz?subject=Student%20Founding%20Team%20Application">Apply to the Founding Team<svg class="icon"><use href="#i-arrow"/></svg></a>
+      </div>
+      <ul class="check-list">
+        <li><svg class="icon"><use href="#i-check"/></svg>Propose your own ideas and directions</li>
+        <li><svg class="icon"><use href="#i-check"/></svg>Help organize events from the ground up</li>
+        <li><svg class="icon"><use href="#i-check"/></svg>Work directly with companies and experts</li>
+        <li><svg class="icon"><use href="#i-check"/></svg>Represent Future Talent at your university</li>
+        <li><svg class="icon"><use href="#i-check"/></svg>Grow your own professional network</li>
+        <li><svg class="icon"><use href="#i-check"/></svg>Gain experience on a real, regionally-ambitious initiative</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="partners" class="section" aria-labelledby="partners-h">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Partners</span>
+        <h2 id="partners-h">Building more opportunities, together.</h2>
+        <p>Future Talent Association is open to collaboration with:</p>
+      </div>
+      <div class="partners-grid">
+        <div class="partner-card"><svg class="icon"><use href="#i-columns"/></svg><h3>Universities</h3><p>Educational institutions and academic organizations.</p></div>
+        <div class="partner-card"><svg class="icon"><use href="#i-briefcase"/></svg><h3>Companies</h3><p>Employers and corporate partners.</p></div>
+        <div class="partner-card"><svg class="icon"><use href="#i-users"/></svg><h3>Experts</h3><p>Professionals and industry specialists.</p></div>
+        <div class="partner-card"><svg class="icon"><use href="#i-community"/></svg><h3>Professional Communities</h3><p>Associations and professional networks.</p></div>
+        <div class="partner-card"><svg class="icon"><use href="#i-network"/></svg><h3>International Partners</h3><p>International organizations and initiatives.</p></div>
+      </div>
+
+      <div class="geo-route" aria-label="Expansion roadmap">
+        <span class="city">Almaty</span><svg class="icon"><use href="#i-arrow"/></svg>
+        <span class="city">Astana</span><svg class="icon"><use href="#i-arrow"/></svg>
+        <span class="city">Karaganda</span><svg class="icon"><use href="#i-arrow"/></svg>
+        <span class="city">Taraz</span><svg class="icon"><use href="#i-arrow"/></svg>
+        <span class="city">Central Asia</span>
+      </div>
+      <p class="geo-note">Future Talent launches in Kazakhstan and is gradually bringing together universities, companies and students from more cities. Our long-term goal is a regional Future Talent ecosystem across Central Asia.</p>
+
+      <div id="forum" class="forum-strip">
+        <svg class="icon"><use href="#i-trophy"/></svg>
+        <div>
+          <h3>Future Talent Forum</h3>
+          <p>Our annual flagship gathering of students, universities, employers and experts — featuring Future Skills, technology &amp; AI, HR and the labor market, entrepreneurship, real business cases, networking, panel discussions and student projects. <strong>Future Talent Awards</strong> recognizes the students, teams, universities and companies creating new opportunities for talent development.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cta" class="section" aria-labelledby="cta-h" style="background:var(--surface-2)">
+    <div class="wrap">
+      <div class="section-head" style="max-width:none">
+        <span class="eyebrow">Get involved</span>
+        <h2 id="cta-h">Let's build the future together.</h2>
+      </div>
+      <div class="cta-grid">
+        <div class="cta-card">
+          <span class="icon-badge"><svg class="icon"><use href="#i-cap"/></svg></span>
+          <h3>You're a student?</h3>
+          <p>Join the community and unlock new opportunities.</p>
+          <a class="link-arrow" href="mailto:hello@futuretalent.kz?subject=Becoming%20a%20Member">Become a Member<svg class="icon"><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="cta-card">
+          <span class="icon-badge"><svg class="icon"><use href="#i-briefcase"/></svg></span>
+          <h3>You're a company?</h3>
+          <p>Partner with us and meet future talent today.</p>
+          <a class="link-arrow" href="mailto:hello@futuretalent.kz?subject=Becoming%20a%20Corporate%20Partner">Become a Partner<svg class="icon"><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="cta-card">
+          <span class="icon-badge"><svg class="icon"><use href="#i-columns"/></svg></span>
+          <h3>You're a university?</h3>
+          <p>Launch joint projects with us.</p>
+          <a class="link-arrow" href="mailto:hello@futuretalent.kz?subject=University%20Partnership">Partner Your University<svg class="icon"><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="cta-card">
+          <span class="icon-badge"><svg class="icon"><use href="#i-users"/></svg></span>
+          <h3>You're an expert?</h3>
+          <p>Share your experience and shape the next generation.</p>
+          <a class="link-arrow" href="mailto:hello@futuretalent.kz?subject=Becoming%20an%20Expert">Share Your Expertise<svg class="icon"><use href="#i-arrow"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div class="foot-brand">
+      <div class="foot-logo">
+        <img src="logo-icon.png" alt="Future Talent Association">
+        <span class="foot-wordmark">Future Talent<span>Association</span></span>
+      </div>
+      <p>Let's build the future together. A professional community connecting students, universities, business and experts across Kazakhstan and Central Asia.</p>
+    </div>
+    <div class="foot-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#what-we-do">What We Do</a></li>
+        <li><a href="#programs">Programs</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Get Involved</h4>
+      <ul>
+        <li><a href="#founding-team">Founding Team</a></li>
+        <li><a href="#partners">Partners</a></li>
+        <li><a href="mailto:hello@futuretalent.kz?subject=Becoming%20a%20Member">Become a Member</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><svg class="icon"><use href="#i-pin"/></svg>Almaty, Kazakhstan</li>
+        <li><svg class="icon"><use href="#i-mail"/></svg><a href="mailto:hello@futuretalent.kz">hello@futuretalent.kz</a></li>
+        <li>LinkedIn — Future Talent Association</li>
+        <li>Instagram — @futuretalent.kz</li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>© 2026 Future Talent Association.</span>
+    <span>Currently forming in Almaty, Kazakhstan.</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var navToggle = document.getElementById('navToggle');
+  var mobilePanel = document.getElementById('mobilePanel');
+  var navToggleIcon = document.getElementById('navToggleIcon');
+  navToggle.addEventListener('click', function(){
+    var open = mobilePanel.getAttribute('data-open') === 'true';
+    mobilePanel.setAttribute('data-open', String(!open));
+    navToggle.setAttribute('aria-expanded', String(!open));
+    navToggleIcon.innerHTML = '<use href="#' + (open ? 'i-menu' : 'i-close') + '"/>';
+  });
+  mobilePanel.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      mobilePanel.setAttribute('data-open', 'false');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggleIcon.innerHTML = '<use href="#i-menu"/>';
+    });
+  });
+
+  var tabButtons = document.querySelectorAll('.tab-btn');
+  var tabPanels = document.querySelectorAll('.tab-panel');
+  function activateTab(name){
+    tabButtons.forEach(function(btn){
+      btn.setAttribute('aria-selected', String(btn.getAttribute('data-tab') === name));
+    });
+    tabPanels.forEach(function(panel){
+      panel.hidden = panel.getAttribute('data-panel') !== name;
+    });
+  }
+  tabButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){ activateTab(btn.getAttribute('data-tab')); });
+  });
+  document.querySelectorAll('[data-goto-tab]').forEach(function(el){
+    el.addEventListener('click', function(){
+      activateTab(el.getAttribute('data-goto-tab'));
+    });
+  });
+})();
+</script>
