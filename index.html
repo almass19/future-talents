@@ -132,15 +132,40 @@
   .nav-links a{ text-decoration:none;color:var(--ink-soft);font-size:.92rem;font-weight:500; transition:color .15s ease; }
   .nav-links a:hover{color:var(--accent)}
   .nav-cta{display:flex;align-items:center;gap:.9rem}
-  .lang{ font-family:'IBM Plex Sans',sans-serif;font-size:.85rem;font-weight:600;color:var(--ink-soft);
-    display:inline-flex;align-items:center;gap:.3em; }
-  .lang .icon{width:14px;height:14px}
+
+  .lang-switch{position:relative}
+  .lang-btn{
+    font-family:'IBM Plex Sans',sans-serif;font-size:.85rem;font-weight:600;color:var(--ink-soft);
+    display:inline-flex;align-items:center;gap:.3em;background:none;border:0;cursor:pointer;padding:.3em .2em;
+  }
+  .lang-btn:hover{color:var(--accent)}
+  .lang-btn .icon{width:14px;height:14px;transition:transform .15s ease}
+  .lang-btn[aria-expanded="true"] .icon{transform:rotate(180deg)}
+  .lang-menu{
+    position:absolute;top:calc(100% + 10px);right:0;min-width:170px;background:var(--surface);
+    border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:.4rem;z-index:50;
+  }
+  .lang-option{
+    display:block;width:100%;text-align:left;padding:.6em .8em;border-radius:8px;background:none;border:0;
+    cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:.9rem;color:var(--ink-soft);
+  }
+  .lang-option:hover{background:var(--accent-soft);color:var(--accent)}
+  .lang-option[aria-current="true"]{color:var(--accent);font-weight:700}
+
+  .mobile-lang-row{display:flex;gap:.5rem;margin-top:.3rem}
+  .mobile-lang-option{
+    flex:1;font-family:'IBM Plex Sans',sans-serif;font-size:.85rem;font-weight:600;color:var(--ink-soft);
+    background:var(--surface);border:1.5px solid var(--border);border-radius:999px;cursor:pointer;
+    min-height:44px;
+  }
+  .mobile-lang-option[aria-current="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+
   .nav-toggle{display:none;background:none;border:0;color:var(--ink);padding:.4rem;cursor:pointer}
   .nav-toggle .icon{width:24px;height:24px}
   .mobile-panel{display:none}
   @media (max-width:960px){
     .nav-links{display:none}
-    .nav-cta .btn-outline,.nav-cta .lang{display:none}
+    .nav-cta .btn-outline,.nav-cta .lang-switch{display:none}
     .nav-toggle{display:inline-flex}
     .mobile-panel[data-open="true"]{
       display:flex;flex-direction:column;gap:1.1rem;
@@ -453,29 +478,43 @@
       <span class="brand-mark"><img src="logo-full.png" width="876" height="388" alt="Future Talent Association"></span>
     </a>
     <ul class="nav-links">
-      <li><a href="#top">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#programs">Programs</a></li>
-      <li><a href="#partners">Partnerships</a></li>
-      <li><a href="#founding-team">News &amp; Events</a></li>
-      <li><a href="mailto:hello@futuretalent.kz">Contact</a></li>
+      <li><a href="#top" data-i18n="nav.home">Home</a></li>
+      <li><a href="#about" data-i18n="nav.about">About</a></li>
+      <li><a href="#programs" data-i18n="nav.programs">Programs</a></li>
+      <li><a href="#partners" data-i18n="nav.partnerships">Partnerships</a></li>
+      <li><a href="#founding-team" data-i18n="nav.news">News &amp; Events</a></li>
+      <li><a href="mailto:hello@futuretalent.kz" data-i18n="nav.contact">Contact</a></li>
     </ul>
     <div class="nav-cta">
-      <span class="lang">EN<svg class="icon"><use href="#i-chevron-down"/></svg></span>
-      <a class="btn btn-outline" href="#programs">Join Us<svg class="icon"><use href="#i-arrow"/></svg></a>
+      <div class="lang-switch">
+        <button class="lang-btn" id="langBtn" aria-haspopup="true" aria-expanded="false">
+          <span id="langLabel">EN</span><svg class="icon"><use href="#i-chevron-down"/></svg>
+        </button>
+        <div class="lang-menu" id="langMenu" hidden>
+          <button class="lang-option" data-lang="en">English</button>
+          <button class="lang-option" data-lang="ru">Русский</button>
+          <button class="lang-option" data-lang="kk">Қазақша</button>
+        </div>
+      </div>
+      <a class="btn btn-outline" href="#programs" data-i18n="nav.join">Join Us<svg class="icon"><use href="#i-arrow"/></svg></a>
       <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mobilePanel" aria-label="Open menu">
         <svg class="icon" id="navToggleIcon"><use href="#i-menu"/></svg>
       </button>
     </div>
   </div>
   <nav class="mobile-panel" id="mobilePanel" data-open="false">
-    <a href="#top">Home</a>
-    <a href="#about">About</a>
-    <a href="#programs">Programs</a>
-    <a href="#partners">Partnerships</a>
-    <a href="#founding-team">News &amp; Events</a>
-    <a href="mailto:hello@futuretalent.kz">Contact</a>
-    <a class="btn btn-primary" href="#programs">Join Us<svg class="icon"><use href="#i-arrow"/></svg></a>
+    <a href="#top" data-i18n="nav.home">Home</a>
+    <a href="#about" data-i18n="nav.about">About</a>
+    <a href="#programs" data-i18n="nav.programs">Programs</a>
+    <a href="#partners" data-i18n="nav.partnerships">Partnerships</a>
+    <a href="#founding-team" data-i18n="nav.news">News &amp; Events</a>
+    <a href="mailto:hello@futuretalent.kz" data-i18n="nav.contact">Contact</a>
+    <div class="mobile-lang-row">
+      <button class="mobile-lang-option" data-lang="en">EN</button>
+      <button class="mobile-lang-option" data-lang="ru">RU</button>
+      <button class="mobile-lang-option" data-lang="kk">KZ</button>
+    </div>
+    <a class="btn btn-primary" href="#programs" data-i18n="nav.join">Join Us<svg class="icon"><use href="#i-arrow"/></svg></a>
   </nav>
 </header>
 
@@ -485,11 +524,11 @@
     <img class="hero-photo" src="hero-classroom.jpg" width="2000" height="1174" fetchpriority="high" decoding="async" alt="A speaker presenting to engaged students in a modern lecture hall">
     <div class="wrap hero-inner">
       <div class="hero-copy">
-        <span class="eyebrow">Empowering talent · Building tomorrow</span>
+        <span class="eyebrow" data-i18n="hero.eyebrow">Empowering talent · Building tomorrow</span>
         <h1>Future Talent Association</h1>
-        <p>Connecting students, universities, business and experts to create real opportunities and shape the future of work.</p>
+        <p data-i18n="hero.subtitle">Connecting students, universities, business and experts to create real opportunities and shape the future of work.</p>
         <div class="hero-ctas">
-          <a class="btn btn-primary" href="#process">Discover Our Mission<svg class="icon"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn-primary" href="#process"><span data-i18n="hero.cta">Discover Our Mission</span><svg class="icon"><use href="#i-arrow"/></svg></a>
         </div>
       </div>
     </div>
@@ -499,19 +538,19 @@
     <div class="wrap stake-grid">
       <a class="stake-item" href="#programs" data-goto-tab="students">
         <span class="icon-badge"><svg class="icon"><use href="#i-cap"/></svg></span>
-        <span><strong>Students</strong><span>Skills. Experience. Career.</span></span>
+        <span><strong data-i18n="stake.students.title">Students</strong><span data-i18n="stake.students.sub">Skills. Experience. Career.</span></span>
       </a>
       <a class="stake-item" href="#programs" data-goto-tab="universities">
         <span class="icon-badge"><svg class="icon"><use href="#i-columns"/></svg></span>
-        <span><strong>Universities</strong><span>Partnerships. Development. Impact.</span></span>
+        <span><strong data-i18n="stake.universities.title">Universities</strong><span data-i18n="stake.universities.sub">Partnerships. Development. Impact.</span></span>
       </a>
       <a class="stake-item" href="#programs" data-goto-tab="companies">
         <span class="icon-badge"><svg class="icon"><use href="#i-briefcase"/></svg></span>
-        <span><strong>Business</strong><span>Talent. Projects. Growth.</span></span>
+        <span><strong data-i18n="stake.business.title">Business</strong><span data-i18n="stake.business.sub">Talent. Projects. Growth.</span></span>
       </a>
       <a class="stake-item" href="#programs" data-goto-tab="experts">
         <span class="icon-badge"><svg class="icon"><use href="#i-users"/></svg></span>
-        <span><strong>Experts</strong><span>Knowledge. Mentorship. Influence.</span></span>
+        <span><strong data-i18n="stake.experts.title">Experts</strong><span data-i18n="stake.experts.sub">Knowledge. Mentorship. Influence.</span></span>
       </a>
     </div>
   </section>
@@ -520,38 +559,38 @@
     <div class="wrap">
       <div class="section-split" style="margin-bottom:clamp(2rem,4vw,3rem)">
         <div class="section-head">
-          <span class="eyebrow">Our process</span>
-          <h2 id="process-h">How it works</h2>
-          <p>We bring together students, companies, experts and universities to turn ideas into real solutions.</p>
-          <a class="link-arrow" style="margin-top:1.1rem" href="#programs">Learn more<svg class="icon"><use href="#i-arrow"/></svg></a>
+          <span class="eyebrow" data-i18n="process.eyebrow">Our process</span>
+          <h2 id="process-h" data-i18n="process.title">How it works</h2>
+          <p data-i18n="process.subtitle">We bring together students, companies, experts and universities to turn ideas into real solutions.</p>
+          <a class="link-arrow" style="margin-top:1.1rem" href="#programs"><span data-i18n="process.learnmore">Learn more</span><svg class="icon"><use href="#i-arrow"/></svg></a>
         </div>
         <div class="process-flow">
           <div class="process-card">
             <span class="proc-badge">1</span>
             <span class="icon-badge"><svg class="icon"><use href="#i-briefcase"/></svg></span>
-            <h3>Company challenge</h3>
-            <p>Real business needs and open cases.</p>
+            <h3 data-i18n="process.card1.title">Company challenge</h3>
+            <p data-i18n="process.card1.desc">Real business needs and open cases.</p>
           </div>
           <div class="process-arrow"><svg class="icon"><use href="#i-arrow"/></svg></div>
           <div class="process-card">
             <span class="proc-badge">2</span>
             <span class="icon-badge"><svg class="icon"><use href="#i-users"/></svg></span>
-            <h3>Student team</h3>
-            <p>Diverse talents, new perspectives.</p>
+            <h3 data-i18n="process.card2.title">Student team</h3>
+            <p data-i18n="process.card2.desc">Diverse talents, new perspectives.</p>
           </div>
           <div class="process-arrow"><svg class="icon"><use href="#i-arrow"/></svg></div>
           <div class="process-card">
             <span class="proc-badge">3</span>
             <span class="icon-badge"><svg class="icon"><use href="#i-handshake"/></svg></span>
-            <h3>Expert guidance</h3>
-            <p>Mentorship, knowledge, support.</p>
+            <h3 data-i18n="process.card3.title">Expert guidance</h3>
+            <p data-i18n="process.card3.desc">Mentorship, knowledge, support.</p>
           </div>
           <div class="process-arrow"><svg class="icon"><use href="#i-arrow"/></svg></div>
           <div class="process-card">
             <span class="proc-badge">4</span>
             <span class="icon-badge"><svg class="icon"><use href="#i-trend"/></svg></span>
-            <h3>Real result</h3>
-            <p>Projects, solutions, impact.</p>
+            <h3 data-i18n="process.card4.title">Real result</h3>
+            <p data-i18n="process.card4.desc">Projects, solutions, impact.</p>
           </div>
         </div>
       </div>
@@ -562,42 +601,42 @@
     <div class="wrap">
       <div class="section-split" style="margin-bottom:clamp(2rem,4vw,3rem)">
         <div class="section-head">
-          <span class="eyebrow">Our programs</span>
-          <h2 id="programs-h">What we create</h2>
-          <p>We design programs and initiatives that give students practical experience, helping them grow and create value for business and society.</p>
-          <a class="link-arrow" style="margin-top:1.1rem" href="#get-started">Explore all programs<svg class="icon"><use href="#i-arrow"/></svg></a>
+          <span class="eyebrow" data-i18n="programs.eyebrow">Our programs</span>
+          <h2 id="programs-h" data-i18n="programs.title">What we create</h2>
+          <p data-i18n="programs.subtitle">We design programs and initiatives that give students practical experience, helping them grow and create value for business and society.</p>
+          <a class="link-arrow" style="margin-top:1.1rem" href="#get-started"><span data-i18n="programs.explore">Explore all programs</span><svg class="icon"><use href="#i-arrow"/></svg></a>
         </div>
         <div class="programs-grid">
           <div class="program-card">
             <img src="p-talks.jpg" width="1344" height="1008" loading="lazy" decoding="async" alt="A mentor speaking to a small group of students">
             <div class="program-body">
               <span class="icon-badge"><svg class="icon"><use href="#i-mic"/></svg></span>
-              <h3>Future Talks</h3>
-              <p>Inspiring speakers, industry insights, career guidance.</p>
+              <h3 data-i18n="programs.talks.title">Future Talks</h3>
+              <p data-i18n="programs.talks.desc">Inspiring speakers, industry insights, career guidance.</p>
             </div>
           </div>
           <div class="program-card">
             <img src="p-cases.jpg" width="1344" height="1008" loading="lazy" decoding="async" alt="A diverse team reviewing a business case around a table">
             <div class="program-body">
               <span class="icon-badge"><svg class="icon"><use href="#i-clipboard"/></svg></span>
-              <h3>Business Cases</h3>
-              <p>Solve real company challenges with student teams.</p>
+              <h3 data-i18n="programs.cases.title">Business Cases</h3>
+              <p data-i18n="programs.cases.desc">Solve real company challenges with student teams.</p>
             </div>
           </div>
           <div class="program-card">
             <img src="p-skills.jpg" width="1344" height="1008" loading="lazy" decoding="async" alt="A hands-on workshop training session">
             <div class="program-body">
               <span class="icon-badge"><svg class="icon"><use href="#i-tool"/></svg></span>
-              <h3>Future Skills</h3>
-              <p>Training, workshops, career development, mentorship.</p>
+              <h3 data-i18n="programs.skills.title">Future Skills</h3>
+              <p data-i18n="programs.skills.desc">Training, workshops, career development, mentorship.</p>
             </div>
           </div>
           <div class="program-card">
             <img src="p-projects.jpg" width="1344" height="1008" loading="lazy" decoding="async" alt="Students and professionals collaborating on a laptop project">
             <div class="program-body">
               <span class="icon-badge"><svg class="icon"><use href="#i-briefcase"/></svg></span>
-              <h3>Company Projects</h3>
-              <p>Long-term collaborations with businesses and universities.</p>
+              <h3 data-i18n="programs.projects.title">Company Projects</h3>
+              <p data-i18n="programs.projects.desc">Long-term collaborations with businesses and universities.</p>
             </div>
           </div>
         </div>
@@ -608,73 +647,73 @@
   <section id="get-started" class="section" aria-labelledby="roles-h">
     <div class="wrap">
       <div class="section-head">
-        <span class="eyebrow">Get started</span>
-        <h2 id="roles-h">Built around four roles.</h2>
-        <p>One ecosystem, four ways in. Choose the one that's yours.</p>
+        <span class="eyebrow" data-i18n="roles.eyebrow">Get started</span>
+        <h2 id="roles-h" data-i18n="roles.title">Built around four roles.</h2>
+        <p data-i18n="roles.subtitle">One ecosystem, four ways in. Choose the one that's yours.</p>
       </div>
 
       <div class="tabbar" role="tablist" aria-label="Choose your role">
-        <button class="tab-btn" role="tab" data-tab="students" aria-selected="true"><svg class="icon"><use href="#i-cap"/></svg>Students</button>
-        <button class="tab-btn" role="tab" data-tab="companies" aria-selected="false"><svg class="icon"><use href="#i-briefcase"/></svg>Companies</button>
-        <button class="tab-btn" role="tab" data-tab="universities" aria-selected="false"><svg class="icon"><use href="#i-columns"/></svg>Universities</button>
-        <button class="tab-btn" role="tab" data-tab="experts" aria-selected="false"><svg class="icon"><use href="#i-users"/></svg>Experts</button>
+        <button class="tab-btn" role="tab" data-tab="students" aria-selected="true"><svg class="icon"><use href="#i-cap"/></svg><span data-i18n="roles.tab.students">Students</span></button>
+        <button class="tab-btn" role="tab" data-tab="companies" aria-selected="false"><svg class="icon"><use href="#i-briefcase"/></svg><span data-i18n="roles.tab.companies">Companies</span></button>
+        <button class="tab-btn" role="tab" data-tab="universities" aria-selected="false"><svg class="icon"><use href="#i-columns"/></svg><span data-i18n="roles.tab.universities">Universities</span></button>
+        <button class="tab-btn" role="tab" data-tab="experts" aria-selected="false"><svg class="icon"><use href="#i-users"/></svg><span data-i18n="roles.tab.experts">Experts</span></button>
       </div>
 
       <div class="tab-panel" data-panel="students">
         <div>
-          <p class="lede">Get practical experience, develop in-demand skills, meet employers and unlock opportunities for professional growth.</p>
-          <a class="btn btn-primary" href="mailto:hello@futuretalent.kz?subject=Becoming%20a%20Member">Become a Member<svg class="icon"><use href="#i-arrow"/></svg></a>
+          <p class="lede" data-i18n="roles.students.lede">Get practical experience, develop in-demand skills, meet employers and unlock opportunities for professional growth.</p>
+          <a class="btn btn-primary" href="mailto:hello@futuretalent.kz?subject=Becoming%20a%20Member"><span data-i18n="roles.students.cta">Become a Member</span><svg class="icon"><use href="#i-arrow"/></svg></a>
         </div>
         <ul class="check-list">
-          <li><svg class="icon"><use href="#i-check"/></svg>Real projects with real companies</li>
-          <li><svg class="icon"><use href="#i-check"/></svg>Meetings with companies and hiring teams</li>
-          <li><svg class="icon"><use href="#i-check"/></svg>Career opportunities as they open up</li>
-          <li><svg class="icon"><use href="#i-check"/></svg>Professional networking, early</li>
-          <li><svg class="icon"><use href="#i-check"/></svg>Future Skills development</li>
-          <li><svg class="icon"><use href="#i-check"/></svg>Participation in events and forums</li>
+          <li><svg class="icon"><use href="#i-check"/></svg><span data-i18n="roles.students.li1">Real projects with real companies</span></li>
+          <li><svg class="icon"><use href="#i-check"/></svg><span data-i18n="roles.students.li2">Meetings with companies and hiring teams</span></li>
+          <li><svg class="icon"><use href="#i-check"/></svg><span data-i18n="roles.students.li3">Career opportunities as they open up</span></li>
+          <li><svg class="icon"><use href="#i-check"/></svg><span data-i18n="roles.students.li4">Professional networking, early</span></li>
+          <li><svg class="icon"><use href="#i-check"/></svg><span data-i18n="roles.students.li5">Future Skills development</span></li>
+          <li><svg class="icon"><use href="#i-check"/></svg><span data-i18n="roles.students.li6">Participation in events and forums</span></li>
         </ul>
       </div>
 
       <div class="tab-panel" data-panel="companies" hidden>
         <div>
-          <p class="lede">Get direct access to future talent and take part in shaping tomorrow's workforce.</p>
-          <p class="pull">Build your talent pipeline before graduation.</p>
-          <a class="btn btn-primary" href="mailto:hello@futuretalent.kz?subject=Becoming%20a%20Corporate%20Partner">Become a Partner<svg class="icon"><use href="#i-arrow"/></svg></a>
+          <p class="lede" data-i18n="roles.companies.lede">Get direct access to future talent and take part in shaping tomorrow's workforce.</p>
+          <p class="pull" data-i18n="roles.companies.pull">Build your talent pipeline before graduation.</p>
+          <a class="btn btn-primary" href="mailto:hello@futuretalent.kz?subject=Becoming%20a%20Corporate%20Partner"><span data-i18n="roles.companies.cta">Become a Partner</span><svg class="icon"><use href="#i-arrow"/></svg></a>
         </div>
         <ul class="check-list">
-          <li><svg class="icon"><use href="#i-check"/></svg>A talent pipeline, built early</li>
-          <li><svg class="icon"><use href="#i-check"/></svg>Real business cases for student teams</li>
-          <li><svg class="icon"><use href="#i-check"/></svg>Internship and project opportunities</li>
-          <li><svg class="icon"><use href="#i-check"/></svg>Meetings with potential candidates</li>
-          <li><svg class="icon"><use href="#i-check"/></svg>Employer branding among students</li>
-          <li><svg class="icon"><use href="#i-check"/></svg>Research and feedback from the next generation</li>
+          <li><svg class="icon"><use href="#i-check"/></svg><span data-i18n="roles.companies.li1">A talent pipeline, built early</span></li>
+          <li><svg class="icon"><use href="#i-check"/></svg><span data-i18n="roles.companies.li2">Real business cases for student teams</span></li>
+          <li><svg class="icon"><use href="#i-check"/></svg><span data-i18n="roles.companies.li3">Internship and project opportunities</span></li>
+          <li><svg class="icon"><use href="#i-check"/></svg><span data-i18n="roles.companies.li4">Meetings with potential candidates</span></li>
+          <li><svg class="icon"><use href="#i-check"/></svg><span data-i18n="roles.companies.li5">Employer branding among students</span></li>
+          <li><svg class="icon"><use href="#i-check"/></svg><span data-i18n="roles.companies.li6">Research and feedback from the next generation</span></li>
         </ul>
       </div>
 
       <div class="tab-panel" data-panel="universities" hidden>
         <div>
-          <p class="lede">Create additional opportunities for your students and build systemic engagement with employers.</p>
-          <a class="btn btn-primary" href="mailto:hello@futuretalent.kz?subject=University%20Partnership">Partner Your University<svg class="icon"><use href="#i-arrow"/></svg></a>
+          <p class="lede" data-i18n="roles.universities.lede">Create additional opportunities for your students and build systemic engagement with employers.</p>
+          <a class="btn btn-primary" href="mailto:hello@futuretalent.kz?subject=University%20Partnership"><span data-i18n="roles.universities.cta">Partner Your University</span><svg class="icon"><use href="#i-arrow"/></svg></a>
         </div>
         <ul class="check-list">
-          <li><svg class="icon"><use href="#i-check"/></svg>Joint educational projects</li>
-          <li><svg class="icon"><use href="#i-check"/></svg>Research conducted among students</li>
-          <li><svg class="icon"><use href="#i-check"/></svg>Career events, on your campus</li>
-          <li><svg class="icon"><use href="#i-check"/></svg>Projects run together with companies</li>
-          <li><svg class="icon"><use href="#i-check"/></svg>Participation in inter-university initiatives</li>
-          <li><svg class="icon"><use href="#i-check"/></svg>Development of student communities</li>
+          <li><svg class="icon"><use href="#i-check"/></svg><span data-i18n="roles.universities.li1">Joint educational projects</span></li>
+          <li><svg class="icon"><use href="#i-check"/></svg><span data-i18n="roles.universities.li2">Research conducted among students</span></li>
+          <li><svg class="icon"><use href="#i-check"/></svg><span data-i18n="roles.universities.li3">Career events, on your campus</span></li>
+          <li><svg class="icon"><use href="#i-check"/></svg><span data-i18n="roles.universities.li4">Projects run together with companies</span></li>
+          <li><svg class="icon"><use href="#i-check"/></svg><span data-i18n="roles.universities.li5">Participation in inter-university initiatives</span></li>
+          <li><svg class="icon"><use href="#i-check"/></svg><span data-i18n="roles.universities.li6">Development of student communities</span></li>
         </ul>
       </div>
 
       <div class="tab-panel" data-panel="experts" hidden>
         <div>
-          <p class="lede">Share your knowledge, take part in our educational programs, and become part of a community shaping the future of the labor market.</p>
-          <a class="btn btn-primary" href="mailto:hello@futuretalent.kz?subject=Becoming%20an%20Expert">Share Your Expertise<svg class="icon"><use href="#i-arrow"/></svg></a>
+          <p class="lede" data-i18n="roles.experts.lede">Share your knowledge, take part in our educational programs, and become part of a community shaping the future of the labor market.</p>
+          <a class="btn btn-primary" href="mailto:hello@futuretalent.kz?subject=Becoming%20an%20Expert"><span data-i18n="roles.experts.cta">Share Your Expertise</span><svg class="icon"><use href="#i-arrow"/></svg></a>
         </div>
         <ul class="check-list">
-          <li><svg class="icon"><use href="#i-check"/></svg>Mentor a student project team</li>
-          <li><svg class="icon"><use href="#i-check"/></svg>Speak at a Future Talks session</li>
-          <li><svg class="icon"><use href="#i-check"/></svg>Judge or advise on a Business Case</li>
+          <li><svg class="icon"><use href="#i-check"/></svg><span data-i18n="roles.experts.li1">Mentor a student project team</span></li>
+          <li><svg class="icon"><use href="#i-check"/></svg><span data-i18n="roles.experts.li2">Speak at a Future Talks session</span></li>
+          <li><svg class="icon"><use href="#i-check"/></svg><span data-i18n="roles.experts.li3">Judge or advise on a Business Case</span></li>
         </ul>
       </div>
     </div>
@@ -683,9 +722,9 @@
   <section id="ecosystem" class="section" aria-labelledby="eco-h" style="background:var(--surface-2)">
     <div class="wrap">
       <div class="section-head">
-        <span class="eyebrow">Together</span>
-        <h2 id="eco-h">Our ecosystem</h2>
-        <p>We connect key players in the ecosystem to create opportunities, share knowledge and build a stronger future for talent and business.</p>
+        <span class="eyebrow" data-i18n="eco.eyebrow">Together</span>
+        <h2 id="eco-h" data-i18n="eco.title">Our ecosystem</h2>
+        <p data-i18n="eco.subtitle">We connect key players in the ecosystem to create opportunities, share knowledge and build a stronger future for talent and business.</p>
       </div>
       <div class="ecosystem-row">
         <div class="ecosystem-diagram">
@@ -698,23 +737,23 @@
           <div class="eco-center"><img src="logo-icon.png" width="304" height="304" alt=""></div>
           <div class="eco-node top">
             <span class="bubble"><svg class="icon"><use href="#i-cap"/></svg></span>
-            <strong>Students</strong><span>Learn. Grow. Create.</span>
+            <strong data-i18n="stake.students.title">Students</strong><span data-i18n="eco.students.tag">Learn. Grow. Create.</span>
           </div>
           <div class="eco-node left">
             <span class="bubble"><svg class="icon"><use href="#i-columns"/></svg></span>
-            <strong>Universities</strong><span>Partner. Teach. Guide.</span>
+            <strong data-i18n="stake.universities.title">Universities</strong><span data-i18n="eco.universities.tag">Partner. Teach. Guide.</span>
           </div>
           <div class="eco-node right">
             <span class="bubble"><svg class="icon"><use href="#i-briefcase"/></svg></span>
-            <strong>Business</strong><span>Innovate. Build. Hire.</span>
+            <strong data-i18n="stake.business.title">Business</strong><span data-i18n="eco.business.tag">Innovate. Build. Hire.</span>
           </div>
           <div class="eco-node bottom">
             <span class="bubble"><svg class="icon"><use href="#i-users"/></svg></span>
-            <strong>Experts</strong><span>Share. Mentor. Inspire.</span>
+            <strong data-i18n="stake.experts.title">Experts</strong><span data-i18n="eco.experts.tag">Share. Mentor. Inspire.</span>
           </div>
         </div>
         <div class="ecosystem-card">
-          <p>Different backgrounds. One goal — more opportunities for the future.</p>
+          <p data-i18n="eco.card">Different backgrounds. One goal — more opportunities for the future.</p>
           <div class="rule"></div>
         </div>
       </div>
@@ -725,11 +764,11 @@
     <img class="hero-photo" src="founding.jpg" width="1344" height="756" loading="lazy" decoding="async" alt="A focused student working on a laptop in a modern co-working space">
     <div class="wrap hero-inner">
       <div class="hero-copy">
-        <span class="eyebrow">Get involved</span>
-        <h2>Join the Founding Team</h2>
-        <p>Be part of the team that builds Future Talent from the ground up. Bring your ideas, skills and energy — let's create something meaningful together.</p>
+        <span class="eyebrow" data-i18n="founding.eyebrow">Get involved</span>
+        <h2 data-i18n="founding.title">Join the Founding Team</h2>
+        <p data-i18n="founding.subtitle">Be part of the team that builds Future Talent from the ground up. Bring your ideas, skills and energy — let's create something meaningful together.</p>
         <div class="hero-ctas">
-          <a class="btn btn-primary" href="mailto:hello@futuretalent.kz?subject=Student%20Founding%20Team%20Application">Apply Now<svg class="icon"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn-primary" href="mailto:hello@futuretalent.kz?subject=Student%20Founding%20Team%20Application"><span data-i18n="founding.cta">Apply Now</span><svg class="icon"><use href="#i-arrow"/></svg></a>
         </div>
       </div>
     </div>
@@ -739,35 +778,35 @@
     <div class="wrap">
       <div class="section-split">
         <div class="section-head">
-          <span class="eyebrow">Partnerships</span>
-          <h2 id="partners-h">Our partners</h2>
-          <p>We collaborate with forward-thinking universities, companies, experts and international partners who share our vision.</p>
+          <span class="eyebrow" data-i18n="partners.eyebrow">Partnerships</span>
+          <h2 id="partners-h" data-i18n="partners.title">Our partners</h2>
+          <p data-i18n="partners.subtitle">We collaborate with forward-thinking universities, companies, experts and international partners who share our vision.</p>
         </div>
         <div class="partners-row">
           <div class="partner-item">
             <span class="bubble"><svg class="icon"><use href="#i-columns"/></svg></span>
-            <strong>Universities</strong>
+            <strong data-i18n="partners.universities">Universities</strong>
           </div>
           <div class="partner-item">
             <span class="bubble"><svg class="icon"><use href="#i-briefcase"/></svg></span>
-            <strong>Companies</strong>
+            <strong data-i18n="partners.companies">Companies</strong>
           </div>
           <div class="partner-item">
             <span class="bubble"><svg class="icon"><use href="#i-users"/></svg></span>
-            <strong>Experts</strong>
+            <strong data-i18n="partners.experts">Experts</strong>
           </div>
           <div class="partner-item">
             <span class="bubble"><svg class="icon"><use href="#i-community"/></svg></span>
-            <strong>Professional Communities</strong>
+            <strong data-i18n="partners.communities">Professional Communities</strong>
           </div>
           <div class="partner-item">
             <span class="bubble"><svg class="icon"><use href="#i-network"/></svg></span>
-            <strong>International Partners</strong>
+            <strong data-i18n="partners.international">International Partners</strong>
           </div>
         </div>
       </div>
       <div class="partners-dotstrip">
-        <span>Universities</span><span>Companies</span><span>Experts</span><span>Professional Communities</span><span>International Partners</span>
+        <span data-i18n="partners.universities">Universities</span><span data-i18n="partners.companies">Companies</span><span data-i18n="partners.experts">Experts</span><span data-i18n="partners.communities">Professional Communities</span><span data-i18n="partners.international">International Partners</span>
       </div>
     </div>
   </section>
@@ -776,13 +815,13 @@
     <div class="wrap">
       <div class="cta-band-row">
         <div>
-          <span class="eyebrow">Let's build</span>
-          <h2 id="cta-h">The future together.</h2>
-          <p>More opportunities. Stronger connections. A brighter future for every talent.</p>
+          <span class="eyebrow" data-i18n="cta.eyebrow">Let's build</span>
+          <h2 id="cta-h" data-i18n="cta.title">The future together.</h2>
+          <p data-i18n="cta.subtitle">More opportunities. Stronger connections. A brighter future for every talent.</p>
         </div>
         <div class="cta-band-actions">
-          <a class="btn btn-white" href="mailto:hello@futuretalent.kz?subject=Becoming%20a%20Member">Join Future Talent<svg class="icon"><use href="#i-arrow"/></svg></a>
-          <a class="btn btn-outline-white" href="mailto:hello@futuretalent.kz?subject=Becoming%20a%20Corporate%20Partner">Become a Partner</a>
+          <a class="btn btn-white" href="mailto:hello@futuretalent.kz?subject=Becoming%20a%20Member"><span data-i18n="cta.join">Join Future Talent</span><svg class="icon"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn-outline-white" href="mailto:hello@futuretalent.kz?subject=Becoming%20a%20Corporate%20Partner"><span data-i18n="cta.partner">Become a Partner</span></a>
         </div>
       </div>
     </div>
@@ -797,12 +836,12 @@
       <span class="foot-wordmark">Future Talent<span>Association</span></span>
     </div>
     <div class="foot-contact">
-      <span><svg class="icon"><use href="#i-pin"/></svg>Almaty, Kazakhstan</span>
+      <span><svg class="icon"><use href="#i-pin"/></svg><span data-i18n="footer.address">Almaty, Kazakhstan</span></span>
       <span><svg class="icon"><use href="#i-mail"/></svg><a href="mailto:hello@futuretalent.kz">hello@futuretalent.kz</a></span>
     </div>
   </div>
   <div class="wrap foot-bottom">
-    <span class="foot-copy">© 2026 Future Talent Association. All rights reserved.</span>
+    <span class="foot-copy" data-i18n="footer.copyright">© 2026 Future Talent Association. All rights reserved.</span>
     <div class="social-row">
       <a href="https://www.linkedin.com" aria-label="Future Talent Association on LinkedIn"><svg class="icon"><use href="#i-linkedin"/></svg></a>
       <a href="https://www.instagram.com/futuretalent.kz" aria-label="Future Talent Association on Instagram"><svg class="icon"><use href="#i-instagram"/></svg></a>
@@ -847,6 +886,307 @@
       activateTab(el.getAttribute('data-goto-tab'));
     });
   });
+})();
+
+(function(){
+  var translations = {
+    en: {
+      'nav.home':'Home','nav.about':'About','nav.programs':'Programs','nav.partnerships':'Partnerships',
+      'nav.news':'News & Events','nav.contact':'Contact','nav.join':'Join Us',
+      'hero.eyebrow':'Empowering talent · Building tomorrow',
+      'hero.subtitle':'Connecting students, universities, business and experts to create real opportunities and shape the future of work.',
+      'hero.cta':'Discover Our Mission',
+      'stake.students.title':'Students','stake.students.sub':'Skills. Experience. Career.',
+      'stake.universities.title':'Universities','stake.universities.sub':'Partnerships. Development. Impact.',
+      'stake.business.title':'Business','stake.business.sub':'Talent. Projects. Growth.',
+      'stake.experts.title':'Experts','stake.experts.sub':'Knowledge. Mentorship. Influence.',
+      'process.eyebrow':'Our process','process.title':'How it works',
+      'process.subtitle':'We bring together students, companies, experts and universities to turn ideas into real solutions.',
+      'process.learnmore':'Learn more',
+      'process.card1.title':'Company challenge','process.card1.desc':'Real business needs and open cases.',
+      'process.card2.title':'Student team','process.card2.desc':'Diverse talents, new perspectives.',
+      'process.card3.title':'Expert guidance','process.card3.desc':'Mentorship, knowledge, support.',
+      'process.card4.title':'Real result','process.card4.desc':'Projects, solutions, impact.',
+      'programs.eyebrow':'Our programs','programs.title':'What we create',
+      'programs.subtitle':'We design programs and initiatives that give students practical experience, helping them grow and create value for business and society.',
+      'programs.explore':'Explore all programs',
+      'programs.talks.title':'Future Talks','programs.talks.desc':'Inspiring speakers, industry insights, career guidance.',
+      'programs.cases.title':'Business Cases','programs.cases.desc':'Solve real company challenges with student teams.',
+      'programs.skills.title':'Future Skills','programs.skills.desc':'Training, workshops, career development, mentorship.',
+      'programs.projects.title':'Company Projects','programs.projects.desc':'Long-term collaborations with businesses and universities.',
+      'roles.eyebrow':'Get started','roles.title':'Built around four roles.',
+      'roles.subtitle':"One ecosystem, four ways in. Choose the one that's yours.",
+      'roles.tab.students':'Students','roles.tab.companies':'Companies','roles.tab.universities':'Universities','roles.tab.experts':'Experts',
+      'roles.students.lede':'Get practical experience, develop in-demand skills, meet employers and unlock opportunities for professional growth.',
+      'roles.students.cta':'Become a Member',
+      'roles.students.li1':'Real projects with real companies',
+      'roles.students.li2':'Meetings with companies and hiring teams',
+      'roles.students.li3':'Career opportunities as they open up',
+      'roles.students.li4':'Professional networking, early',
+      'roles.students.li5':'Future Skills development',
+      'roles.students.li6':'Participation in events and forums',
+      'roles.companies.lede':"Get direct access to future talent and take part in shaping tomorrow's workforce.",
+      'roles.companies.pull':'Build your talent pipeline before graduation.',
+      'roles.companies.cta':'Become a Partner',
+      'roles.companies.li1':'A talent pipeline, built early',
+      'roles.companies.li2':'Real business cases for student teams',
+      'roles.companies.li3':'Internship and project opportunities',
+      'roles.companies.li4':'Meetings with potential candidates',
+      'roles.companies.li5':'Employer branding among students',
+      'roles.companies.li6':'Research and feedback from the next generation',
+      'roles.universities.lede':'Create additional opportunities for your students and build systemic engagement with employers.',
+      'roles.universities.cta':'Partner Your University',
+      'roles.universities.li1':'Joint educational projects',
+      'roles.universities.li2':'Research conducted among students',
+      'roles.universities.li3':'Career events, on your campus',
+      'roles.universities.li4':'Projects run together with companies',
+      'roles.universities.li5':'Participation in inter-university initiatives',
+      'roles.universities.li6':'Development of student communities',
+      'roles.experts.lede':'Share your knowledge, take part in our educational programs, and become part of a community shaping the future of the labor market.',
+      'roles.experts.cta':'Share Your Expertise',
+      'roles.experts.li1':'Mentor a student project team',
+      'roles.experts.li2':'Speak at a Future Talks session',
+      'roles.experts.li3':'Judge or advise on a Business Case',
+      'eco.eyebrow':'Together','eco.title':'Our ecosystem',
+      'eco.subtitle':'We connect key players in the ecosystem to create opportunities, share knowledge and build a stronger future for talent and business.',
+      'eco.students.tag':'Learn. Grow. Create.',
+      'eco.universities.tag':'Partner. Teach. Guide.',
+      'eco.business.tag':'Innovate. Build. Hire.',
+      'eco.experts.tag':'Share. Mentor. Inspire.',
+      'eco.card':'Different backgrounds. One goal — more opportunities for the future.',
+      'founding.eyebrow':'Get involved','founding.title':'Join the Founding Team',
+      'founding.subtitle':"Be part of the team that builds Future Talent from the ground up. Bring your ideas, skills and energy — let's create something meaningful together.",
+      'founding.cta':'Apply Now',
+      'partners.eyebrow':'Partnerships','partners.title':'Our partners',
+      'partners.subtitle':'We collaborate with forward-thinking universities, companies, experts and international partners who share our vision.',
+      'partners.universities':'Universities','partners.companies':'Companies','partners.experts':'Experts',
+      'partners.communities':'Professional Communities','partners.international':'International Partners',
+      'cta.eyebrow':"Let's build",'cta.title':'The future together.',
+      'cta.subtitle':'More opportunities. Stronger connections. A brighter future for every talent.',
+      'cta.join':'Join Future Talent','cta.partner':'Become a Partner',
+      'footer.address':'Almaty, Kazakhstan',
+      'footer.copyright':'© 2026 Future Talent Association. All rights reserved.',
+      'meta.title':'Future Talent Association',
+      'meta.description':'Future Talent Association connects students, universities, business and experts to create real opportunities and shape the future of work in Kazakhstan and Central Asia.'
+    },
+    ru: {
+      'nav.home':'Главная','nav.about':'О нас','nav.programs':'Программы','nav.partnerships':'Партнёрство',
+      'nav.news':'Новости и события','nav.contact':'Контакты','nav.join':'Присоединиться',
+      'hero.eyebrow':'Раскрываем таланты · Строим будущее',
+      'hero.subtitle':'Объединяем студентов, университеты, бизнес и экспертов, чтобы создавать реальные возможности и формировать будущее рынка труда.',
+      'hero.cta':'Узнать о нашей миссии',
+      'stake.students.title':'Студенты','stake.students.sub':'Навыки. Опыт. Карьера.',
+      'stake.universities.title':'Университеты','stake.universities.sub':'Партнёрство. Развитие. Влияние.',
+      'stake.business.title':'Бизнес','stake.business.sub':'Таланты. Проекты. Рост.',
+      'stake.experts.title':'Эксперты','stake.experts.sub':'Знания. Наставничество. Влияние.',
+      'process.eyebrow':'Наш процесс','process.title':'Как это работает',
+      'process.subtitle':'Мы объединяем студентов, компании, экспертов и университеты, чтобы превращать идеи в реальные решения.',
+      'process.learnmore':'Узнать больше',
+      'process.card1.title':'Задача компании','process.card1.desc':'Реальные бизнес-задачи и открытые кейсы.',
+      'process.card2.title':'Команда студентов','process.card2.desc':'Разные таланты, свежий взгляд.',
+      'process.card3.title':'Экспертное сопровождение','process.card3.desc':'Наставничество, знания, поддержка.',
+      'process.card4.title':'Реальный результат','process.card4.desc':'Проекты, решения, влияние.',
+      'programs.eyebrow':'Наши программы','programs.title':'Что мы создаём',
+      'programs.subtitle':'Мы разрабатываем программы и инициативы, которые дают студентам практический опыт, помогают им расти и создавать ценность для бизнеса и общества.',
+      'programs.explore':'Все программы',
+      'programs.talks.title':'Future Talks','programs.talks.desc':'Вдохновляющие спикеры, экспертиза отрасли, карьерные советы.',
+      'programs.cases.title':'Бизнес-кейсы','programs.cases.desc':'Решаем реальные задачи компаний силами студенческих команд.',
+      'programs.skills.title':'Future Skills','programs.skills.desc':'Тренинги, мастер-классы, карьерное развитие, менторство.',
+      'programs.projects.title':'Проекты с компаниями','programs.projects.desc':'Долгосрочное сотрудничество с бизнесом и университетами.',
+      'roles.eyebrow':'Начать','roles.title':'Построено вокруг четырёх ролей.',
+      'roles.subtitle':'Одна экосистема — четыре пути входа. Выберите свой.',
+      'roles.tab.students':'Студенты','roles.tab.companies':'Компании','roles.tab.universities':'Университеты','roles.tab.experts':'Эксперты',
+      'roles.students.lede':'Получите практический опыт, развивайте востребованные навыки, знакомьтесь с работодателями и открывайте возможности для карьерного роста.',
+      'roles.students.cta':'Стать участником',
+      'roles.students.li1':'Реальные проекты с реальными компаниями',
+      'roles.students.li2':'Встречи с компаниями и HR-командами',
+      'roles.students.li3':'Карьерные возможности сразу, как только они появляются',
+      'roles.students.li4':'Профессиональные связи с самого начала',
+      'roles.students.li5':'Развитие навыков будущего (Future Skills)',
+      'roles.students.li6':'Участие в мероприятиях и форумах',
+      'roles.companies.lede':'Получите прямой доступ к будущим талантам и участвуйте в формировании кадров завтрашнего дня.',
+      'roles.companies.pull':'Формируйте кадровый резерв ещё до выпуска студентов.',
+      'roles.companies.cta':'Стать партнёром',
+      'roles.companies.li1':'Кадровый резерв, сформированный заранее',
+      'roles.companies.li2':'Реальные бизнес-кейсы для студенческих команд',
+      'roles.companies.li3':'Возможности для стажировок и проектов',
+      'roles.companies.li4':'Встречи с потенциальными кандидатами',
+      'roles.companies.li5':'Узнаваемость бренда работодателя среди студентов',
+      'roles.companies.li6':'Исследования и обратная связь от нового поколения',
+      'roles.universities.lede':'Создавайте дополнительные возможности для своих студентов и выстраивайте системное взаимодействие с работодателями.',
+      'roles.universities.cta':'Подключить университет',
+      'roles.universities.li1':'Совместные образовательные проекты',
+      'roles.universities.li2':'Исследования среди студентов',
+      'roles.universities.li3':'Карьерные мероприятия на вашем кампусе',
+      'roles.universities.li4':'Проекты совместно с компаниями',
+      'roles.universities.li5':'Участие в межвузовских инициативах',
+      'roles.universities.li6':'Развитие студенческих сообществ',
+      'roles.experts.lede':'Делитесь знаниями, участвуйте в образовательных программах и станьте частью сообщества, формирующего будущее рынка труда.',
+      'roles.experts.cta':'Поделиться экспертизой',
+      'roles.experts.li1':'Станьте ментором студенческой проектной команды',
+      'roles.experts.li2':'Выступите на сессии Future Talks',
+      'roles.experts.li3':'Станьте судьёй или консультантом бизнес-кейса',
+      'eco.eyebrow':'Вместе','eco.title':'Наша экосистема',
+      'eco.subtitle':'Мы объединяем ключевых участников экосистемы, чтобы создавать возможности, делиться знаниями и строить более сильное будущее для талантов и бизнеса.',
+      'eco.students.tag':'Учиться. Расти. Создавать.',
+      'eco.universities.tag':'Партнёрство. Обучение. Наставничество.',
+      'eco.business.tag':'Инновации. Развитие. Найм.',
+      'eco.experts.tag':'Делиться. Наставлять. Вдохновлять.',
+      'eco.card':'Разный опыт. Одна цель — больше возможностей для будущего.',
+      'founding.eyebrow':'Присоединяйтесь','founding.title':'Присоединяйтесь к команде основателей',
+      'founding.subtitle':'Станьте частью команды, которая создаёт Future Talent с нуля. Приносите свои идеи, навыки и энергию — давайте создавать что-то значимое вместе.',
+      'founding.cta':'Подать заявку',
+      'partners.eyebrow':'Партнёрство','partners.title':'Наши партнёры',
+      'partners.subtitle':'Мы сотрудничаем с прогрессивными университетами, компаниями, экспертами и международными партнёрами, разделяющими наше видение.',
+      'partners.universities':'Университеты','partners.companies':'Компании','partners.experts':'Эксперты',
+      'partners.communities':'Профессиональные сообщества','partners.international':'Международные партнёры',
+      'cta.eyebrow':'Давайте строить','cta.title':'Будущее вместе.',
+      'cta.subtitle':'Больше возможностей. Крепче связи. Светлое будущее для каждого таланта.',
+      'cta.join':'Присоединиться к Future Talent','cta.partner':'Стать партнёром',
+      'footer.address':'Алматы, Казахстан',
+      'footer.copyright':'© 2026 Future Talent Association. Все права защищены.',
+      'meta.title':'Future Talent Association',
+      'meta.description':'Future Talent Association объединяет студентов, университеты, бизнес и экспертов, создавая реальные возможности и формируя будущее рынка труда в Казахстане и Центральной Азии.'
+    },
+    kk: {
+      'nav.home':'Басты бет','nav.about':'Біз туралы','nav.programs':'Бағдарламалар','nav.partnerships':'Серіктестік',
+      'nav.news':'Жаңалықтар мен іс-шаралар','nav.contact':'Байланыс','nav.join':'Қосылу',
+      'hero.eyebrow':'Талантты аша отырып · Болашақты құрамыз',
+      'hero.subtitle':'Студенттерді, университеттерді, бизнесті және сарапшыларды біріктіріп, нақты мүмкіндіктер жасаймыз және еңбек нарығының болашағын қалыптастырамыз.',
+      'hero.cta':'Біздің миссиямен танысыңыз',
+      'stake.students.title':'Студенттер','stake.students.sub':'Дағдылар. Тәжірибе. Мансап.',
+      'stake.universities.title':'Университеттер','stake.universities.sub':'Серіктестік. Даму. Әсер.',
+      'stake.business.title':'Бизнес','stake.business.sub':'Таланттар. Жобалар. Өсу.',
+      'stake.experts.title':'Сарапшылар','stake.experts.sub':'Білім. Тәлімгерлік. Ықпал.',
+      'process.eyebrow':'Біздің процесс','process.title':'Бұл қалай жұмыс істейді',
+      'process.subtitle':'Идеяларды нақты шешімдерге айналдыру үшін студенттерді, компанияларды, сарапшылар мен университеттерді біріктіреміз.',
+      'process.learnmore':'Толығырақ',
+      'process.card1.title':'Компания тапсырмасы','process.card1.desc':'Нақты бизнес қажеттіліктер мен ашық кейстер.',
+      'process.card2.title':'Студенттер тобы','process.card2.desc':'Әртүрлі таланттар, жаңа көзқарас.',
+      'process.card3.title':'Сарапшы қолдауы','process.card3.desc':'Тәлімгерлік, білім, қолдау.',
+      'process.card4.title':'Нақты нәтиже','process.card4.desc':'Жобалар, шешімдер, әсер.',
+      'programs.eyebrow':'Біздің бағдарламалар','programs.title':'Біз не жасаймыз',
+      'programs.subtitle':'Біз студенттерге тәжірибе беретін, олардың дамуына және бизнес пен қоғам үшін құндылық жасауына көмектесетін бағдарламалар мен бастамалар әзірлейміз.',
+      'programs.explore':'Барлық бағдарламалар',
+      'programs.talks.title':'Future Talks','programs.talks.desc':'Шабыттандыратын спикерлер, сала сараптамасы, мансаптық кеңестер.',
+      'programs.cases.title':'Бизнес-кейстер','programs.cases.desc':'Компаниялардың нақты мәселелерін студенттер командасымен шешеміз.',
+      'programs.skills.title':'Future Skills','programs.skills.desc':'Тренингтер, шеберлік сабақтары, мансаптық даму, тәлімгерлік.',
+      'programs.projects.title':'Компания жобалары','programs.projects.desc':'Бизнес пен университеттермен ұзақмерзімді ынтымақтастық.',
+      'roles.eyebrow':'Бастау','roles.title':'Төрт рөлге арналған.',
+      'roles.subtitle':'Бір экожүйе — төрт кіру жолы. Өзіңізге сәйкесін таңдаңыз.',
+      'roles.tab.students':'Студенттер','roles.tab.companies':'Компаниялар','roles.tab.universities':'Университеттер','roles.tab.experts':'Сарапшылар',
+      'roles.students.lede':'Тәжірибе алыңыз, сұранысқа ие дағдыларды дамытыңыз, жұмыс берушілермен танысыңыз және кәсіби өсу мүмкіндіктерін ашыңыз.',
+      'roles.students.cta':'Мүше болу',
+      'roles.students.li1':'Нақты компаниялармен нақты жобалар',
+      'roles.students.li2':'Компаниялар мен HR топтарымен кездесулер',
+      'roles.students.li3':'Пайда болған бойда мансаптық мүмкіндіктер',
+      'roles.students.li4':'Ерте кезден бастап кәсіби байланыстар',
+      'roles.students.li5':'Болашақ дағдыларын (Future Skills) дамыту',
+      'roles.students.li6':'Іс-шаралар мен форумдарға қатысу',
+      'roles.companies.lede':'Болашақ таланттарға тікелей қолжетімділік алыңыз және ертеңгі еңбек ресурстарын қалыптастыруға қатысыңыз.',
+      'roles.companies.pull':'Түлектенуге дейін-ақ таланттар резервін қалыптастырыңыз.',
+      'roles.companies.cta':'Серіктес болу',
+      'roles.companies.li1':'Алдын ала қалыптасқан таланттар резерві',
+      'roles.companies.li2':'Студенттер командасына арналған нақты бизнес-кейстер',
+      'roles.companies.li3':'Тағылымдама мен жоба мүмкіндіктері',
+      'roles.companies.li4':'Әлеуетті үміткерлермен кездесулер',
+      'roles.companies.li5':'Студенттер арасында жұмыс беруші брендін тану',
+      'roles.companies.li6':'Жаңа буыннан зерттеу мен кері байланыс',
+      'roles.universities.lede':'Студенттеріңізге қосымша мүмкіндіктер жасап, жұмыс берушілермен жүйелі ынтымақтастық орнатыңыз.',
+      'roles.universities.cta':'Университетті қосу',
+      'roles.universities.li1':'Бірлескен білім беру жобалары',
+      'roles.universities.li2':'Студенттер арасында жүргізілетін зерттеулер',
+      'roles.universities.li3':'Сіздің кампуста өтетін мансаптық іс-шаралар',
+      'roles.universities.li4':'Компаниялармен бірлескен жобалар',
+      'roles.universities.li5':'Жоғары оқу орындары аралық бастамаларға қатысу',
+      'roles.universities.li6':'Студенттік қауымдастықтарды дамыту',
+      'roles.experts.lede':'Біліміңізбен бөлісіңіз, білім беру бағдарламаларына қатысыңыз және еңбек нарығының болашағын қалыптастыратын қауымдастықтың мүшесі болыңыз.',
+      'roles.experts.cta':'Тәжірибеңізбен бөлісу',
+      'roles.experts.li1':'Студенттік жоба командасына тәлімгер болыңыз',
+      'roles.experts.li2':'Future Talks сессиясында сөз сөйлеңіз',
+      'roles.experts.li3':'Бизнес-кейс бойынша төреші немесе кеңесші болыңыз',
+      'eco.eyebrow':'Бірге','eco.title':'Біздің экожүйе',
+      'eco.subtitle':'Мүмкіндіктер жасау, біліммен бөлісу және таланттар мен бизнес үшін мықты болашақ құру мақсатында экожүйенің негізгі қатысушыларын біріктіреміз.',
+      'eco.students.tag':'Үйрену. Өсу. Жасау.',
+      'eco.universities.tag':'Серіктестік. Оқыту. Бағыттау.',
+      'eco.business.tag':'Инновация. Құру. Жұмысқа алу.',
+      'eco.experts.tag':'Бөлісу. Тәлімгерлік. Шабыттандыру.',
+      'eco.card':'Әртүрлі тәжірибе. Бір мақсат — болашаққа көбірек мүмкіндік.',
+      'founding.eyebrow':'Қосылыңыз','founding.title':'Негізін қалаушылар командасына қосылыңыз',
+      'founding.subtitle':'Future Talent-ті нөлден құратын команданың бөлігі болыңыз. Идеяларыңызды, дағдыларыңызды және энергияңызды алып келіңіз — бірге мәнді нәрсе жасайық.',
+      'founding.cta':'Өтінім беру',
+      'partners.eyebrow':'Серіктестік','partners.title':'Біздің серіктестер',
+      'partners.subtitle':'Біз көзқарасымызды бөлісетін ілгерішіл университеттермен, компаниялармен, сарапшылармен және халықаралық серіктестермен ынтымақтасамыз.',
+      'partners.universities':'Университеттер','partners.companies':'Компаниялар','partners.experts':'Сарапшылар',
+      'partners.communities':'Кәсіби қауымдастықтар','partners.international':'Халықаралық серіктестер',
+      'cta.eyebrow':'Бірге құрайық','cta.title':'Болашақты бірге.',
+      'cta.subtitle':'Көбірек мүмкіндік. Берік байланыстар. Әр талант үшін жарқын болашақ.',
+      'cta.join':'Future Talent-ке қосылу','cta.partner':'Серіктес болу',
+      'footer.address':'Алматы, Қазақстан',
+      'footer.copyright':'© 2026 Future Talent Association. Барлық құқықтар қорғалған.',
+      'meta.title':'Future Talent Association',
+      'meta.description':'Future Talent Association студенттерді, университеттерді, бизнесті және сарапшыларды біріктіріп, Қазақстан мен Орталық Азияда нақты мүмкіндіктер жасап, еңбек нарығының болашағын қалыптастырады.'
+    }
+  };
+
+  var LANG_KEY = 'ftaLang';
+  var LANG_LABELS = { en:'EN', ru:'RU', kk:'KZ' };
+  var langBtn = document.getElementById('langBtn');
+  var langLabel = document.getElementById('langLabel');
+  var langMenu = document.getElementById('langMenu');
+  var metaDesc = document.querySelector('meta[name="description"]');
+  var ogDesc = document.querySelector('meta[property="og:description"]');
+
+  function applyLang(lang){
+    var dict = translations[lang] || translations.en;
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var key = el.getAttribute('data-i18n');
+      if (dict[key] !== undefined) el.textContent = dict[key];
+    });
+    document.documentElement.lang = lang;
+    if (dict['meta.title']) document.title = dict['meta.title'];
+    if (metaDesc && dict['meta.description']) metaDesc.setAttribute('content', dict['meta.description']);
+    if (ogDesc && dict['meta.description']) ogDesc.setAttribute('content', dict['meta.description']);
+    langLabel.textContent = LANG_LABELS[lang] || 'EN';
+    document.querySelectorAll('.lang-option').forEach(function(opt){
+      opt.setAttribute('aria-current', opt.getAttribute('data-lang') === lang ? 'true' : 'false');
+    });
+    document.querySelectorAll('.mobile-lang-option').forEach(function(opt){
+      opt.setAttribute('aria-current', opt.getAttribute('data-lang') === lang ? 'true' : 'false');
+    });
+    try { localStorage.setItem(LANG_KEY, lang); } catch(e){}
+  }
+
+  function closeLangMenu(){
+    langMenu.hidden = true;
+    langBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  langBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    var open = !langMenu.hidden;
+    langMenu.hidden = open;
+    langBtn.setAttribute('aria-expanded', String(!open));
+  });
+  document.addEventListener('click', function(e){
+    if (!langMenu.hidden && !langMenu.contains(e.target) && e.target !== langBtn) closeLangMenu();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') closeLangMenu();
+  });
+  document.querySelectorAll('.lang-option, .mobile-lang-option').forEach(function(opt){
+    opt.addEventListener('click', function(){
+      applyLang(opt.getAttribute('data-lang'));
+      closeLangMenu();
+    });
+  });
+
+  var initial = 'en';
+  try {
+    var saved = localStorage.getItem(LANG_KEY);
+    if (saved && translations[saved]) initial = saved;
+  } catch(e){}
+  applyLang(initial);
 })();
 </script>
 
