@@ -1,4 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Future Talent Association</title>
+<meta name="description" content="Future Talent Association connects students, universities, business and experts to create real opportunities and shape the future of work in Kazakhstan and Central Asia.">
+<meta name="theme-color" content="#F5F1E6">
+<link rel="icon" href="logo-icon.png" type="image/png">
+<link rel="apple-touch-icon" href="logo-icon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Future Talent Association">
+<meta property="og:description" content="Connecting students, universities, business and experts to create real opportunities and shape the future of work.">
+<meta property="og:image" content="hero-classroom.jpg">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,6 +41,7 @@
   }
 
   *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;overflow-x:hidden}
   body{
     margin:0;
     background:var(--bg);
@@ -35,7 +50,10 @@
     font-size:1rem;
     line-height:1.6;
     -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
   }
+  section[id],main{scroll-margin-top:84px}
+  img{max-width:100%}
   @media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
   h1,h2,h3{
     font-family:'Archivo',Arial,sans-serif;
@@ -57,10 +75,12 @@
     color:var(--accent);
     display:inline-flex;
     align-items:center;
+    flex-wrap:wrap;
+    max-width:100%;
     gap:.6em;
   }
-  .eyebrow::after{ content:""; width:2.2em; height:1px; background:var(--accent); display:inline-block; opacity:.55 }
-  .wrap{ max-width:1240px; margin-inline:auto; padding-inline:clamp(20px,5vw,64px); }
+  .eyebrow::after{ content:""; flex:0 0 2.2em; height:1px; background:var(--accent); display:inline-block; opacity:.55 }
+  .wrap{ width:100%; max-width:1240px; margin-inline:auto; padding-inline:clamp(20px,5vw,64px); }
   .icon{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
   :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 
@@ -130,7 +150,7 @@
       padding:1.4rem clamp(20px,5vw,64px) 1.8rem;
       border-top:1px solid var(--border); background:var(--bg);
     }
-    .mobile-panel a{text-decoration:none;color:var(--ink);font-size:1.05rem;font-weight:600}
+    .mobile-panel a:not(.btn){text-decoration:none;color:var(--ink);font-size:1.05rem;font-weight:600}
     .mobile-panel .btn{align-self:flex-start}
   }
 
@@ -344,9 +364,86 @@
   .foot-bottom{border-top:1px solid var(--inverse-border);padding-block:1.4rem;font-size:.8rem;display:flex;flex-wrap:wrap;gap:.6rem;justify-content:space-between}
   @media (max-width:820px){.foot-grid{grid-template-columns:1fr 1fr}}
   @media (max-width:520px){.foot-grid{grid-template-columns:1fr}}
-</style>
 
-<svg style="display:none">
+  /* ---- mobile layer ---- */
+  @media (max-width:960px){
+    .nav-row{padding-block:.5rem}
+    .nav-toggle{min-width:44px;min-height:44px;justify-content:center;align-items:center}
+    .mobile-panel[data-open="true"]{
+      gap:.2rem;
+      max-height:calc(100dvh - 68px);
+      overflow-y:auto;
+      -webkit-overflow-scrolling:touch;
+    }
+    .mobile-panel a:not(.btn){
+      display:flex;align-items:center;min-height:48px;
+      border-bottom:1px solid var(--border);
+    }
+    .mobile-panel a:not(.btn):last-of-type{border-bottom:0}
+    .mobile-panel .btn{margin-top:.9rem;align-self:stretch;justify-content:center}
+  }
+
+  @media (max-width:760px){
+    .eyebrow{font-size:.75rem;letter-spacing:.1em;gap:.45em}
+    .eyebrow::after{flex:0 0 1.4em}
+    .brand{padding-block:.3rem}
+    .foot-col a{display:inline-flex;align-items:center;min-height:44px}
+    .foot-col li{min-height:44px}
+    .foot-col ul{gap:.1rem}
+    .foot-wordmark span{font-size:.68rem}
+    .hero-banner{min-height:560px;align-items:flex-start}
+    .hero-banner img.hero-photo{object-position:center 26%}
+    .hero-banner::before{
+      background:linear-gradient(180deg,
+        var(--bg) 0%, var(--bg) 48%,
+        color-mix(in srgb, var(--bg) 55%, transparent) 64%,
+        transparent 90%);
+    }
+    .hero-banner::after{clip-path:polygon(0 88%,100% 70%,100% 100%,0 100%);opacity:.92}
+    .hero-inner{padding-block:1.9rem 2rem}
+    .hero-copy h1{margin-block:.7rem .7rem}
+    .hero-copy p{font-size:1rem;max-width:36ch}
+
+    .btn{min-height:44px}
+    .section{padding-block:clamp(2.8rem,8vw,4rem)}
+    .section-head{margin-bottom:1.8rem}
+
+    .stake-item{padding:1.3rem 0}
+    .stake-item span{font-size:.875rem}
+    .skill-card p,.format-card p,.partner-card p{font-size:.875rem}
+    .stat-copy span{font-size:.875rem}
+    .cta-card p{font-size:.92rem}
+    .check-list li{font-size:.95rem;line-height:1.55}
+    .cta-card .link-arrow,.focus-copy .link-arrow,.about-copy .link-arrow{min-height:44px}
+
+    .focus-photo{aspect-ratio:16/12}
+    .focus-photo::after{clip-path:polygon(70% 0,100% 0,100% 100%,56% 100%)}
+    .focus-caption{left:1.1rem;bottom:1.1rem;font-size:.78rem}
+
+    .tabbar{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+    .tab-btn{justify-content:center;padding:.8em 1em;min-height:46px}
+    .tab-panel{padding:1.5rem 1.3rem}
+
+    .forum-strip{padding:1.6rem 1.3rem}
+    .research-strip{padding:1.6rem 1.3rem;gap:1.4rem}
+    .geo-route{gap:.45rem;font-size:.84rem}
+    .geo-route span.city{padding:.45em .9em}
+  }
+
+  @media (max-width:520px){
+    .stake-grid{gap:1rem}
+    .stake-item{flex-direction:column;align-items:flex-start;gap:.55rem}
+    .hero-ctas .btn,.tab-panel .btn,.founding .btn{width:100%;justify-content:center}
+    .stat-box{padding:1.2rem 1.25rem}
+    .stat-num{font-size:1.75rem}
+    .script-note{font-size:1.5rem}
+    .foot-bottom{flex-direction:column;gap:.35rem}
+  }
+</style>
+</head>
+<body>
+
+<svg style="display:none" aria-hidden="true">
   <defs>
     <symbol id="i-cap" viewBox="0 0 24 24"><path d="M2 9 12 4l10 5-10 5L2 9Z"/><path d="M6 11v4c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-4"/><path d="M20 9v6"/></symbol>
     <symbol id="i-columns" viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M4 21V10l8-5 8 5v11"/><path d="M9 21v-7"/><path d="M15 21v-7"/></symbol>
@@ -384,7 +481,7 @@
 <header class="nav">
   <div class="wrap nav-row">
     <a class="brand" href="#top">
-      <span class="brand-mark"><img src="logo-full.png" alt="Future Talent Association"></span>
+      <span class="brand-mark"><img src="logo-full.png" width="876" height="388" alt="Future Talent Association"></span>
     </a>
     <ul class="nav-links">
       <li><a href="#top">Home</a></li>
@@ -416,7 +513,7 @@
 <main>
 
   <section id="top" class="hero-banner">
-    <img class="hero-photo" src="hero-classroom.jpg" alt="A speaker presenting to engaged students in a modern lecture hall">
+    <img class="hero-photo" src="hero-classroom.jpg" width="1344" height="752" fetchpriority="high" decoding="async" alt="A speaker presenting to engaged students in a modern lecture hall">
     <div class="wrap hero-inner">
       <div class="hero-copy">
         <span class="eyebrow">Empowering talent · Building tomorrow</span>
@@ -488,7 +585,7 @@
         <a class="link-arrow" href="#programs">Explore Our Programs<svg class="icon"><use href="#i-arrow"/></svg></a>
       </div>
       <div class="focus-photo">
-        <img src="focus-skyline.jpg" alt="Modern city skyline with the Baiterek Tower at golden hour">
+        <img src="focus-skyline.jpg" width="1344" height="752" loading="lazy" decoding="async" alt="Modern city skyline with the Baiterek Tower at golden hour">
         <div class="focus-caption">Local talent.<br>Global vision.<span class="rule"></span></div>
       </div>
     </div>
@@ -790,7 +887,7 @@
   <div class="wrap foot-grid">
     <div class="foot-brand">
       <div class="foot-logo">
-        <img src="logo-icon.png" alt="Future Talent Association">
+        <img src="logo-icon.png" width="304" height="304" loading="lazy" alt="Future Talent Association">
         <span class="foot-wordmark">Future Talent<span>Association</span></span>
       </div>
       <p>Let's build the future together. A professional community connecting students, universities, business and experts across Kazakhstan and Central Asia.</p>
@@ -867,3 +964,6 @@
   });
 })();
 </script>
+
+</body>
+</html>
