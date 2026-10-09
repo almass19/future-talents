@@ -221,7 +221,7 @@
   @media (max-width:860px){ .section-split{grid-template-columns:1fr} }
 
   /* process (how it works) */
-  .process-flow{display:flex;align-items:stretch;gap:0;margin-top:0}
+  .process-flow{display:flex;align-items:stretch;gap:0;margin-top:2.4rem}
   .process-card{
     flex:1;min-width:0;position:relative;background:var(--surface);border-radius:16px;
     padding:1.6rem 1.3rem 1.4rem;box-shadow:var(--shadow);
@@ -242,7 +242,7 @@
   }
 
   /* programs (what we create) */
-  .programs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem}
+  .programs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem;margin-top:2.4rem}
   .program-card{background:var(--surface);border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
   .program-card img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
   .program-body{padding:1.1rem 1.1rem 1.3rem}
@@ -557,14 +557,13 @@
 
   <section id="process" class="section" aria-labelledby="process-h">
     <div class="wrap">
-      <div class="section-split" style="margin-bottom:clamp(2rem,4vw,3rem)">
-        <div class="section-head">
-          <span class="eyebrow" data-i18n="process.eyebrow">Our process</span>
-          <h2 id="process-h" data-i18n="process.title">How it works</h2>
-          <p data-i18n="process.subtitle">We bring together students, companies, experts and universities to turn ideas into real solutions.</p>
-          <a class="link-arrow" style="margin-top:1.1rem" href="#programs"><span data-i18n="process.learnmore">Learn more</span><svg class="icon"><use href="#i-arrow"/></svg></a>
-        </div>
-        <div class="process-flow">
+      <div class="section-head">
+        <span class="eyebrow" data-i18n="process.eyebrow">Our process</span>
+        <h2 id="process-h" data-i18n="process.title">How it works</h2>
+        <p data-i18n="process.subtitle">We bring together students, companies, experts and universities to turn ideas into real solutions.</p>
+        <a class="link-arrow" style="margin-top:1.1rem" href="#programs"><span data-i18n="process.learnmore">Learn more</span><svg class="icon"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="process-flow">
           <div class="process-card">
             <span class="proc-badge">1</span>
             <span class="icon-badge"><svg class="icon"><use href="#i-briefcase"/></svg></span>
@@ -592,21 +591,19 @@
             <h3 data-i18n="process.card4.title">Real result</h3>
             <p data-i18n="process.card4.desc">Projects, solutions, impact.</p>
           </div>
-        </div>
       </div>
     </div>
   </section>
 
   <section id="programs" class="section" aria-labelledby="programs-h" style="background:var(--surface-2)">
     <div class="wrap">
-      <div class="section-split" style="margin-bottom:clamp(2rem,4vw,3rem)">
-        <div class="section-head">
-          <span class="eyebrow" data-i18n="programs.eyebrow">Our programs</span>
-          <h2 id="programs-h" data-i18n="programs.title">What we create</h2>
-          <p data-i18n="programs.subtitle">We design programs and initiatives that give students practical experience, helping them grow and create value for business and society.</p>
-          <a class="link-arrow" style="margin-top:1.1rem" href="#get-started"><span data-i18n="programs.explore">Explore all programs</span><svg class="icon"><use href="#i-arrow"/></svg></a>
-        </div>
-        <div class="programs-grid">
+      <div class="section-head">
+        <span class="eyebrow" data-i18n="programs.eyebrow">Our programs</span>
+        <h2 id="programs-h" data-i18n="programs.title">What we create</h2>
+        <p data-i18n="programs.subtitle">We design programs and initiatives that give students practical experience, helping them grow and create value for business and society.</p>
+        <a class="link-arrow" style="margin-top:1.1rem" href="#get-started"><span data-i18n="programs.explore">Explore all programs</span><svg class="icon"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="programs-grid">
           <div class="program-card">
             <img src="p-talks.jpg" width="1344" height="1008" loading="lazy" decoding="async" alt="A mentor speaking to a small group of students">
             <div class="program-body">
@@ -639,7 +636,6 @@
               <p data-i18n="programs.projects.desc">Long-term collaborations with businesses and universities.</p>
             </div>
           </div>
-        </div>
       </div>
     </div>
   </section>
