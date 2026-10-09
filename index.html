@@ -372,6 +372,60 @@
   .social-row .icon{width:16px;height:16px}
   .foot-copy{font-size:.8rem}
 
+  /* apply modal */
+  .modal-overlay{
+    position:fixed;inset:0;z-index:100;background:rgba(11,24,48,.55);backdrop-filter:blur(4px);
+    display:flex;align-items:center;justify-content:center;padding:1.2rem;
+    padding-top:calc(1.2rem + env(safe-area-inset-top,0px));padding-bottom:calc(1.2rem + env(safe-area-inset-bottom,0px));
+  }
+  .modal{
+    position:relative;width:100%;max-width:480px;max-height:calc(100dvh - 2.4rem);overflow-y:auto;
+    background:var(--surface);border-radius:20px;box-shadow:0 30px 70px -20px rgba(11,24,48,.5);
+    padding:clamp(1.6rem,4vw,2.4rem);
+  }
+  .modal-close{
+    position:absolute;top:1rem;right:1rem;width:40px;height:40px;border-radius:50%;
+    background:var(--surface-2);border:0;color:var(--ink-soft);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .modal-close .icon{width:18px;height:18px}
+  .modal-close:hover{color:var(--accent)}
+  .modal h3{font-size:1.4rem;font-weight:800;padding-right:2rem}
+  .modal-sub{color:var(--ink-soft);font-size:.92rem;margin-top:.5rem}
+  .role-picker{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-top:1.4rem}
+  .role-opt{
+    display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:1rem .5rem;
+    background:var(--surface-2);border:1.5px solid var(--border);border-radius:14px;cursor:pointer;
+    font-family:'IBM Plex Sans',sans-serif;font-size:.82rem;font-weight:600;color:var(--ink-soft);
+    transition:background-color .15s ease,color .15s ease,border-color .15s ease;
+  }
+  .role-opt .icon{width:20px;height:20px}
+  .role-opt[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .role-opt:not([aria-pressed="true"]):hover{border-color:var(--accent);color:var(--accent)}
+  .apply-role-error{color:#C0372B;font-size:.85rem;margin-top:.8rem}
+  #applyForm{margin-top:.4rem}
+  .field{display:flex;flex-direction:column;gap:.4rem;margin-top:1.1rem}
+  .field label{font-size:.85rem;font-weight:600;color:var(--ink)}
+  .field label .optional{font-weight:400;color:var(--ink-faint)}
+  .field input{
+    font-family:'IBM Plex Sans',sans-serif;font-size:.95rem;color:var(--ink);
+    background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:.75em .9em;
+  }
+  .field input:focus-visible{border-color:var(--accent)}
+  .field.hp{position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none}
+  .apply-error{color:#C0372B;font-size:.85rem;margin-top:1rem}
+  .apply-actions{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:1.4rem;flex-wrap:wrap}
+  .apply-success{display:flex;flex-direction:column;align-items:center;text-align:center;gap:.9rem;padding-block:1.2rem}
+  .apply-success-icon{width:48px;height:48px;color:var(--accent);background:var(--accent-soft);border-radius:50%;padding:12px;box-sizing:border-box}
+  .apply-success p{font-size:1.05rem;font-weight:600;color:var(--ink)}
+  @media (max-width:480px){
+    .role-picker{gap:.5rem}
+    .role-opt{padding:.85rem .4rem;font-size:.78rem}
+    .apply-actions{flex-direction:column-reverse;align-items:stretch}
+    .apply-actions .btn{width:100%;justify-content:center}
+    .apply-actions .link-arrow{justify-content:center;min-height:44px}
+  }
+
   /* ---- mobile layer ---- */
   @media (max-width:960px){
     .nav-row{padding-block:.5rem}
@@ -498,7 +552,7 @@
           <button class="lang-option" data-lang="kk">Қазақша</button>
         </div>
       </div>
-      <a class="btn btn-outline" href="#programs" data-i18n="nav.join">Join Us<svg class="icon"><use href="#i-arrow"/></svg></a>
+      <button type="button" class="btn btn-outline" data-open-apply=""><span data-i18n="nav.join">Join Us</span><svg class="icon"><use href="#i-arrow"/></svg></button>
       <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mobilePanel" aria-label="Open menu">
         <svg class="icon" id="navToggleIcon"><use href="#i-menu"/></svg>
       </button>
@@ -516,7 +570,7 @@
       <button class="mobile-lang-option" data-lang="ru">RU</button>
       <button class="mobile-lang-option" data-lang="kk">KZ</button>
     </div>
-    <a class="btn btn-primary" href="#programs" data-i18n="nav.join">Join Us<svg class="icon"><use href="#i-arrow"/></svg></a>
+    <button type="button" class="btn btn-primary" data-open-apply=""><span data-i18n="nav.join">Join Us</span><svg class="icon"><use href="#i-arrow"/></svg></button>
   </nav>
 </header>
 
@@ -660,7 +714,7 @@
       <div class="tab-panel" data-panel="students">
         <div>
           <p class="lede" data-i18n="roles.students.lede">Get practical experience, develop in-demand skills, meet employers and unlock opportunities for professional growth.</p>
-          <a class="btn btn-primary" href="mailto:hello@futuretalent.kz?subject=Becoming%20a%20Member"><span data-i18n="roles.students.cta">Become a Member</span><svg class="icon"><use href="#i-arrow"/></svg></a>
+          <button type="button" class="btn btn-primary" data-open-apply="student"><span data-i18n="roles.students.cta">Become a Member</span><svg class="icon"><use href="#i-arrow"/></svg></button>
         </div>
         <ul class="check-list">
           <li><svg class="icon"><use href="#i-check"/></svg><span data-i18n="roles.students.li1">Real projects with real companies</span></li>
@@ -676,7 +730,7 @@
         <div>
           <p class="lede" data-i18n="roles.companies.lede">Get direct access to future talent and take part in shaping tomorrow's workforce.</p>
           <p class="pull" data-i18n="roles.companies.pull">Build your talent pipeline before graduation.</p>
-          <a class="btn btn-primary" href="mailto:hello@futuretalent.kz?subject=Becoming%20a%20Corporate%20Partner"><span data-i18n="roles.companies.cta">Become a Partner</span><svg class="icon"><use href="#i-arrow"/></svg></a>
+          <button type="button" class="btn btn-primary" data-open-apply="partner"><span data-i18n="roles.companies.cta">Become a Partner</span><svg class="icon"><use href="#i-arrow"/></svg></button>
         </div>
         <ul class="check-list">
           <li><svg class="icon"><use href="#i-check"/></svg><span data-i18n="roles.companies.li1">A talent pipeline, built early</span></li>
@@ -691,7 +745,7 @@
       <div class="tab-panel" data-panel="universities" hidden>
         <div>
           <p class="lede" data-i18n="roles.universities.lede">Create additional opportunities for your students and build systemic engagement with employers.</p>
-          <a class="btn btn-primary" href="mailto:hello@futuretalent.kz?subject=University%20Partnership"><span data-i18n="roles.universities.cta">Partner Your University</span><svg class="icon"><use href="#i-arrow"/></svg></a>
+          <button type="button" class="btn btn-primary" data-open-apply="partner"><span data-i18n="roles.universities.cta">Partner Your University</span><svg class="icon"><use href="#i-arrow"/></svg></button>
         </div>
         <ul class="check-list">
           <li><svg class="icon"><use href="#i-check"/></svg><span data-i18n="roles.universities.li1">Joint educational projects</span></li>
@@ -706,7 +760,7 @@
       <div class="tab-panel" data-panel="experts" hidden>
         <div>
           <p class="lede" data-i18n="roles.experts.lede">Share your knowledge, take part in our educational programs, and become part of a community shaping the future of the labor market.</p>
-          <a class="btn btn-primary" href="mailto:hello@futuretalent.kz?subject=Becoming%20an%20Expert"><span data-i18n="roles.experts.cta">Share Your Expertise</span><svg class="icon"><use href="#i-arrow"/></svg></a>
+          <button type="button" class="btn btn-primary" data-open-apply="expert"><span data-i18n="roles.experts.cta">Share Your Expertise</span><svg class="icon"><use href="#i-arrow"/></svg></button>
         </div>
         <ul class="check-list">
           <li><svg class="icon"><use href="#i-check"/></svg><span data-i18n="roles.experts.li1">Mentor a student project team</span></li>
@@ -766,7 +820,7 @@
         <h2 data-i18n="founding.title">Join the Founding Team</h2>
         <p data-i18n="founding.subtitle">Be part of the team that builds Future Talent from the ground up. Bring your ideas, skills and energy — let's create something meaningful together.</p>
         <div class="hero-ctas">
-          <a class="btn btn-primary" href="mailto:hello@futuretalent.kz?subject=Student%20Founding%20Team%20Application"><span data-i18n="founding.cta">Apply Now</span><svg class="icon"><use href="#i-arrow"/></svg></a>
+          <button type="button" class="btn btn-primary" data-open-apply="student"><span data-i18n="founding.cta">Apply Now</span><svg class="icon"><use href="#i-arrow"/></svg></button>
         </div>
       </div>
     </div>
@@ -818,8 +872,8 @@
           <p data-i18n="cta.subtitle">More opportunities. Stronger connections. A brighter future for every talent.</p>
         </div>
         <div class="cta-band-actions">
-          <a class="btn btn-white" href="mailto:hello@futuretalent.kz?subject=Becoming%20a%20Member"><span data-i18n="cta.join">Join Future Talent</span><svg class="icon"><use href="#i-arrow"/></svg></a>
-          <a class="btn btn-outline-white" href="mailto:hello@futuretalent.kz?subject=Becoming%20a%20Corporate%20Partner"><span data-i18n="cta.partner">Become a Partner</span></a>
+          <button type="button" class="btn btn-white" data-open-apply="student"><span data-i18n="cta.join">Join Future Talent</span><svg class="icon"><use href="#i-arrow"/></svg></button>
+          <button type="button" class="btn btn-outline-white" data-open-apply="partner"><span data-i18n="cta.partner">Become a Partner</span></button>
         </div>
       </div>
     </div>
@@ -846,6 +900,65 @@
     </div>
   </div>
 </footer>
+
+<div class="modal-overlay" id="applyOverlay" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="applyTitle">
+    <button type="button" class="modal-close" id="applyClose" aria-label="Close">
+      <svg class="icon"><use href="#i-close"/></svg>
+    </button>
+
+    <h3 id="applyTitle" data-i18n="apply.title">Submit an application</h3>
+    <p class="modal-sub" data-i18n="apply.subtitle">Tell us who you are, and we'll get back to you.</p>
+
+    <div class="role-picker" id="rolePicker" role="radiogroup" aria-label="Role">
+      <button type="button" class="role-opt" data-role="student" aria-pressed="false">
+        <svg class="icon"><use href="#i-cap"/></svg><span data-i18n="roles.tab.students">Students</span>
+      </button>
+      <button type="button" class="role-opt" data-role="expert" aria-pressed="false">
+        <svg class="icon"><use href="#i-users"/></svg><span data-i18n="roles.tab.experts">Experts</span>
+      </button>
+      <button type="button" class="role-opt" data-role="partner" aria-pressed="false">
+        <svg class="icon"><use href="#i-briefcase"/></svg><span data-i18n="apply.role.partner">Partner</span>
+      </button>
+    </div>
+    <p class="apply-role-error" id="applyRoleError" hidden data-i18n="apply.err.role">Please choose who you are.</p>
+
+    <form id="applyForm" novalidate hidden>
+      <input type="hidden" name="role" id="applyRole">
+
+      <div class="field" id="fieldCompany" hidden>
+        <label for="applyCompany"><span data-i18n="apply.company">Company name</span> <span class="optional" data-i18n="apply.optional">(optional)</span></label>
+        <input type="text" id="applyCompany" name="companyName" maxlength="160" autocomplete="organization">
+      </div>
+      <div class="field">
+        <label for="applyName" data-i18n="apply.name">Your name</label>
+        <input type="text" id="applyName" name="contactName" maxlength="120" autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="applyContact" data-i18n="apply.contact">Phone or email</label>
+        <input type="text" id="applyContact" name="contact" maxlength="200" autocomplete="email">
+      </div>
+      <div class="field hp" aria-hidden="true">
+        <label for="applyWebsite">Website</label>
+        <input type="text" id="applyWebsite" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <p class="apply-error" id="applyError" hidden></p>
+
+      <div class="apply-actions">
+        <button type="button" class="link-arrow" id="applyChangeRole" data-i18n="apply.changeRole">Change role</button>
+        <button type="submit" class="btn btn-primary" id="applySubmit">
+          <span data-i18n="apply.submit">Send application</span><svg class="icon"><use href="#i-arrow"/></svg>
+        </button>
+      </div>
+    </form>
+
+    <div class="apply-success" id="applySuccess" hidden>
+      <svg class="icon apply-success-icon"><use href="#i-check"/></svg>
+      <p data-i18n="apply.success">Thank you! We'll be in touch soon.</p>
+    </div>
+  </div>
+</div>
 
 <script>
 (function(){
@@ -964,6 +1077,20 @@
       'cta.join':'Join Future Talent','cta.partner':'Become a Partner',
       'footer.address':'Almaty, Kazakhstan',
       'footer.copyright':'© 2026 Future Talent Association. All rights reserved.',
+      'apply.title':'Submit an application',
+      'apply.subtitle':"Tell us who you are, and we'll get back to you.",
+      'apply.role.partner':'Partner',
+      'apply.company':'Company name',
+      'apply.optional':'(optional)',
+      'apply.name':'Your name',
+      'apply.contact':'Phone or email',
+      'apply.changeRole':'Change role',
+      'apply.submit':'Send application',
+      'apply.success':"Thank you! We'll be in touch soon.",
+      'apply.err.role':'Please choose who you are.',
+      'apply.err.name':'Please enter your name.',
+      'apply.err.contact':'Please enter a phone number or email.',
+      'apply.err.generic':'Something went wrong. Please try again or email us directly.',
       'meta.title':'Future Talent Association',
       'meta.description':'Future Talent Association connects students, universities, business and experts to create real opportunities and shape the future of work in Kazakhstan and Central Asia.'
     },
@@ -1043,6 +1170,20 @@
       'cta.join':'Присоединиться к Future Talent','cta.partner':'Стать партнёром',
       'footer.address':'Алматы, Казахстан',
       'footer.copyright':'© 2026 Future Talent Association. Все права защищены.',
+      'apply.title':'Оставить заявку',
+      'apply.subtitle':'Расскажите, кто вы, — и мы свяжемся с вами.',
+      'apply.role.partner':'Партнёр',
+      'apply.company':'Название компании',
+      'apply.optional':'(необязательно)',
+      'apply.name':'Ваше имя',
+      'apply.contact':'Телефон или email',
+      'apply.changeRole':'Изменить роль',
+      'apply.submit':'Отправить заявку',
+      'apply.success':'Спасибо! Мы скоро свяжемся с вами.',
+      'apply.err.role':'Пожалуйста, выберите, кто вы.',
+      'apply.err.name':'Пожалуйста, укажите имя.',
+      'apply.err.contact':'Пожалуйста, укажите телефон или email.',
+      'apply.err.generic':'Что-то пошло не так. Попробуйте ещё раз или напишите нам на почту.',
       'meta.title':'Future Talent Association',
       'meta.description':'Future Talent Association объединяет студентов, университеты, бизнес и экспертов, создавая реальные возможности и формируя будущее рынка труда в Казахстане и Центральной Азии.'
     },
@@ -1122,10 +1263,26 @@
       'cta.join':'Future Talent-ке қосылу','cta.partner':'Серіктес болу',
       'footer.address':'Алматы, Қазақстан',
       'footer.copyright':'© 2026 Future Talent Association. Барлық құқықтар қорғалған.',
+      'apply.title':'Өтінім қалдыру',
+      'apply.subtitle':'Кім екеніңізді айтыңыз — біз сізбен байланысамыз.',
+      'apply.role.partner':'Серіктес',
+      'apply.company':'Компания атауы',
+      'apply.optional':'(міндетті емес)',
+      'apply.name':'Атыңыз',
+      'apply.contact':'Телефон немесе email',
+      'apply.changeRole':'Рөлді өзгерту',
+      'apply.submit':'Өтінім жіберу',
+      'apply.success':'Рақмет! Жақын арада сізбен байланысамыз.',
+      'apply.err.role':'Кім екеніңізді таңдаңыз.',
+      'apply.err.name':'Атыңызды енгізіңіз.',
+      'apply.err.contact':'Телефон немесе email енгізіңіз.',
+      'apply.err.generic':'Бір қателік орын алды. Қайталап көріңіз немесе бізге поштаға жазыңыз.',
       'meta.title':'Future Talent Association',
       'meta.description':'Future Talent Association студенттерді, университеттерді, бизнесті және сарапшыларды біріктіріп, Қазақстан мен Орталық Азияда нақты мүмкіндіктер жасап, еңбек нарығының болашағын қалыптастырады.'
     }
   };
+
+  window.__ftaDict = function(){ return translations[document.documentElement.lang] || translations.en; };
 
   var LANG_KEY = 'ftaLang';
   var LANG_LABELS = { en:'EN', ru:'RU', kk:'KZ' };
@@ -1185,6 +1342,152 @@
     if (saved && translations[saved]) initial = saved;
   } catch(e){}
   applyLang(initial);
+})();
+</script>
+
+<script>
+(function(){
+  var overlay = document.getElementById('applyOverlay');
+  var closeBtn = document.getElementById('applyClose');
+  var rolePicker = document.getElementById('rolePicker');
+  var roleButtons = document.querySelectorAll('.role-opt');
+  var roleError = document.getElementById('applyRoleError');
+  var form = document.getElementById('applyForm');
+  var roleInput = document.getElementById('applyRole');
+  var fieldCompany = document.getElementById('fieldCompany');
+  var nameInput = document.getElementById('applyName');
+  var contactInput = document.getElementById('applyContact');
+  var companyInput = document.getElementById('applyCompany');
+  var websiteInput = document.getElementById('applyWebsite');
+  var errorBox = document.getElementById('applyError');
+  var submitBtn = document.getElementById('applySubmit');
+  var changeRoleBtn = document.getElementById('applyChangeRole');
+  var successBox = document.getElementById('applySuccess');
+  var lastFocused = null;
+
+  function t(key, fallback){
+    var dict = window.__ftaDict ? window.__ftaDict() : {};
+    return dict[key] || fallback || key;
+  }
+
+  function selectRole(role){
+    roleButtons.forEach(function(btn){
+      btn.setAttribute('aria-pressed', btn.getAttribute('data-role') === role ? 'true' : 'false');
+    });
+    roleInput.value = role || '';
+    fieldCompany.hidden = role !== 'partner';
+    roleError.hidden = true;
+    if (role) {
+      rolePicker.hidden = true;
+      form.hidden = false;
+      setTimeout(function(){ nameInput.focus(); }, 0);
+    } else {
+      rolePicker.hidden = false;
+      form.hidden = true;
+    }
+  }
+
+  function resetForm(){
+    form.reset();
+    errorBox.hidden = true;
+    successBox.hidden = true;
+    form.hidden = true;
+    rolePicker.hidden = false;
+    roleError.hidden = true;
+    submitBtn.disabled = false;
+  }
+
+  function openModal(role){
+    lastFocused = document.activeElement;
+    resetForm();
+    selectRole(role || null);
+    overlay.hidden = false;
+    document.body.style.overflow = 'hidden';
+    if (!role) {
+      setTimeout(function(){ roleButtons[0].focus(); }, 0);
+    }
+  }
+
+  function closeModal(){
+    overlay.hidden = true;
+    document.body.style.overflow = '';
+    if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+  }
+
+  document.querySelectorAll('[data-open-apply]').forEach(function(trigger){
+    trigger.addEventListener('click', function(){
+      var mobilePanel = document.getElementById('mobilePanel');
+      if (mobilePanel && mobilePanel.getAttribute('data-open') === 'true') {
+        mobilePanel.setAttribute('data-open', 'false');
+        var navToggle = document.getElementById('navToggle');
+        var navToggleIcon = document.getElementById('navToggleIcon');
+        if (navToggle) navToggle.setAttribute('aria-expanded', 'false');
+        if (navToggleIcon) navToggleIcon.innerHTML = '<use href="#i-menu"/>';
+      }
+      openModal(trigger.getAttribute('data-open-apply'));
+    });
+  });
+
+  roleButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){ selectRole(btn.getAttribute('data-role')); });
+  });
+  changeRoleBtn.addEventListener('click', function(){ selectRole(null); });
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e){ if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && !overlay.hidden) closeModal();
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var role = roleInput.value;
+    if (!role) { roleError.hidden = false; return; }
+    var contactName = nameInput.value.trim();
+    var contact = contactInput.value.trim();
+    errorBox.hidden = true;
+
+    if (contactName.length < 2) {
+      errorBox.textContent = t('apply.err.name', 'Please enter your name.');
+      errorBox.hidden = false;
+      nameInput.focus();
+      return;
+    }
+    if (contact.length < 3) {
+      errorBox.textContent = t('apply.err.contact', 'Please enter a phone number or email.');
+      errorBox.hidden = false;
+      contactInput.focus();
+      return;
+    }
+
+    submitBtn.disabled = true;
+
+    fetch('/api/apply', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        role: role,
+        contactName: contactName,
+        contact: contact,
+        companyName: role === 'partner' ? companyInput.value.trim() : '',
+        website: websiteInput.value,
+        lang: document.documentElement.lang,
+        page: location.href
+      })
+    })
+      .then(function(res){ return res.json().then(function(data){ return { ok: res.ok && data.ok, data: data }; }); })
+      .then(function(result){
+        if (!result.ok) throw new Error((result.data && result.data.error) || 'failed');
+        form.hidden = true;
+        successBox.hidden = false;
+      })
+      .catch(function(){
+        errorBox.textContent = t('apply.err.generic', 'Something went wrong. Please try again or email us directly.');
+        errorBox.hidden = false;
+      })
+      .finally(function(){
+        submitBtn.disabled = false;
+      });
+  });
 })();
 </script>
 
