@@ -281,8 +281,9 @@
   @media (max-width:760px){.tab-panel{grid-template-columns:1fr}}
 
   /* ecosystem */
-  .ecosystem-row{display:flex;align-items:center;gap:clamp(1.5rem,3vw,3rem);margin-top:2.4rem}
-  .ecosystem-diagram{position:relative;flex:0 0 auto;width:min(420px,88vw);aspect-ratio:1/1}
+  .ecosystem-row{display:flex;align-items:center;gap:clamp(2rem,4vw,3.5rem)}
+  .ecosystem-intro{flex:0 0 280px;margin-bottom:0}
+  .ecosystem-diagram{position:relative;flex:1 1 360px;max-width:460px;margin-inline:auto;aspect-ratio:1/1}
   .ecosystem-diagram svg.lines{position:absolute;inset:0;width:100%;height:100%}
   .eco-node{
     position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;
@@ -306,14 +307,15 @@
   }
   .eco-center img{width:46px;height:auto;filter:brightness(0) invert(1)}
   .ecosystem-card{
-    flex:0 0 auto;max-width:240px;background:var(--accent-soft);border-radius:16px;padding:1.5rem;
+    flex:0 0 230px;background:var(--accent-soft);border-radius:16px;padding:1.5rem;
   }
   .ecosystem-card p{font-family:'Archivo',sans-serif;font-weight:700;font-size:1.15rem;color:var(--ink)}
   .ecosystem-card .rule{width:2.2rem;height:3px;background:var(--accent);margin-top:1rem;border-radius:2px}
-  @media (max-width:860px){
+  @media (max-width:1060px){
     .ecosystem-row{flex-direction:column}
-    .ecosystem-diagram{width:min(360px,80vw);margin-bottom:1.5rem}
-    .ecosystem-card{max-width:420px;width:100%}
+    .ecosystem-intro{flex:0 0 auto;width:100%;margin-bottom:clamp(2rem,4vw,3rem)}
+    .ecosystem-diagram{flex:none;width:min(360px,80vw);max-width:none;margin:0 auto 1.5rem}
+    .ecosystem-card{flex:none;max-width:420px;width:100%}
   }
 
   /* founding */
@@ -717,12 +719,12 @@
 
   <section id="ecosystem" class="section" aria-labelledby="eco-h" style="background:var(--surface-2)">
     <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow" data-i18n="eco.eyebrow">Together</span>
-        <h2 id="eco-h" data-i18n="eco.title">Our ecosystem</h2>
-        <p data-i18n="eco.subtitle">We connect key players in the ecosystem to create opportunities, share knowledge and build a stronger future for talent and business.</p>
-      </div>
       <div class="ecosystem-row">
+        <div class="section-head ecosystem-intro">
+          <span class="eyebrow" data-i18n="eco.eyebrow">Together</span>
+          <h2 id="eco-h" data-i18n="eco.title">Our ecosystem</h2>
+          <p data-i18n="eco.subtitle">We connect key players in the ecosystem to create opportunities, share knowledge and build a stronger future for talent and business.</p>
+        </div>
         <div class="ecosystem-diagram">
           <svg class="lines" viewBox="0 0 100 100" aria-hidden="true">
             <line x1="50" y1="50" x2="50" y2="10" stroke="var(--border)" stroke-width="1"/>
