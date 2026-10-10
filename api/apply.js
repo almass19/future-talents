@@ -32,6 +32,10 @@ module.exports = async (req, res) => {
   const contactName = clip(body.contactName, 120);
   const contact = clip(body.contact, 200);
   const companyName = clip(body.companyName, 160);
+  const university = clip(body.university, 160);
+  const year = clip(body.year, 40);
+  const field = clip(body.field, 120);
+  const team = clip(body.team, 20);
   const lang = clip(body.lang, 10);
   const page = clip(body.page, 300);
 
@@ -54,6 +58,12 @@ module.exports = async (req, res) => {
 
   const lines = [`🆕 New application — ${ROLE_LABELS[role]}`, ''];
   if (role === 'partner' && companyName) lines.push(`Company: ${companyName}`);
+  if (role === 'student') {
+    if (university) lines.push(`University: ${university}`);
+    if (year) lines.push(`Year: ${year}`);
+    if (field) lines.push(`Field of study: ${field}`);
+    if (team) lines.push(`Wants to join the team: ${team}`);
+  }
   lines.push(`Name: ${contactName}`);
   lines.push(`Contact: ${contact}`);
   if (lang) lines.push(`Language: ${lang}`);
