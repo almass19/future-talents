@@ -35,7 +35,7 @@ module.exports = async (req, res) => {
   const university = clip(body.university, 160);
   const year = clip(body.year, 40);
   const field = clip(body.field, 120);
-  const team = clip(body.team, 20);
+  const team = clip(body.team, 300);
   const lang = clip(body.lang, 10);
   const page = clip(body.page, 300);
 

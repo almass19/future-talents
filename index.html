@@ -414,14 +414,23 @@
   .field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23545E77' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .8em center;background-size:16px;padding-right:2.4em}
   .field input:focus-visible,.field select:focus-visible{border-color:var(--accent)}
   .field.hp{position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none}
-  .yn-toggle{display:flex;gap:.6rem}
-  .yn-opt{
-    flex:1;min-height:44px;padding:.7em 1em;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);
-    font-family:'IBM Plex Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--ink-soft);cursor:pointer;
+  .team-options{display:flex;flex-direction:column;gap:.55rem}
+  .team-opt{
+    display:flex;align-items:center;gap:.7rem;min-height:44px;padding:.65em 1em;border-radius:10px;
+    border:1.5px solid var(--border);background:var(--surface);text-align:left;
+    font-family:'IBM Plex Sans',sans-serif;font-size:.88rem;font-weight:600;color:var(--ink-soft);cursor:pointer;
     transition:background-color .15s ease,color .15s ease,border-color .15s ease;
   }
-  .yn-opt[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
-  .yn-opt:not([aria-pressed="true"]):hover{border-color:var(--accent);color:var(--accent)}
+  .team-opt:hover{border-color:var(--accent)}
+  .team-opt[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+  .team-opt .check{
+    flex:0 0 18px;width:18px;height:18px;border-radius:5px;border:1.5px solid var(--border);
+    display:flex;align-items:center;justify-content:center;background:var(--surface);
+    transition:background-color .15s ease,border-color .15s ease;
+  }
+  .team-opt .check .icon{width:12px;height:12px;color:#fff;opacity:0;transition:opacity .15s ease}
+  .team-opt[aria-pressed="true"] .check{background:var(--accent);border-color:var(--accent)}
+  .team-opt[aria-pressed="true"] .check .icon{opacity:1}
   .apply-error{color:#C0372B;font-size:.85rem;margin-top:1rem}
   .apply-actions{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:1.4rem;flex-wrap:wrap}
   .apply-success{display:flex;flex-direction:column;align-items:center;text-align:center;gap:.9rem;padding-block:1.2rem}
@@ -962,29 +971,18 @@
       </div>
       <div class="field" id="fieldField" hidden>
         <label for="applyField" data-i18n="apply.student.field">What field are you currently studying?</label>
-        <select id="applyField" name="field">
-          <option value="" data-i18n="apply.selectPlaceholder">Select…</option>
-          <option value="it" data-i18n="apply.student.field.it">IT / Data / AI / Cybersecurity</option>
-          <option value="finance" data-i18n="apply.student.field.finance">Finance / Economics</option>
-          <option value="business" data-i18n="apply.student.field.business">Business / Management</option>
-          <option value="marketing" data-i18n="apply.student.field.marketing">Marketing / Communications</option>
-          <option value="law" data-i18n="apply.student.field.law">Law</option>
-          <option value="ir" data-i18n="apply.student.field.ir">International Relations</option>
-          <option value="engineering" data-i18n="apply.student.field.engineering">Engineering / Technology</option>
-          <option value="medicine" data-i18n="apply.student.field.medicine">Medicine / Biology</option>
-          <option value="humanities" data-i18n="apply.student.field.humanities">Humanities</option>
-          <option value="other" data-i18n="apply.student.field.other">Other</option>
-        </select>
-      </div>
-      <div class="field" id="fieldFieldOther" hidden>
-        <label for="applyFieldOther" data-i18n="apply.student.fieldOther">Please specify your field</label>
-        <input type="text" id="applyFieldOther" name="fieldOther" maxlength="120">
+        <input type="text" id="applyField" name="field" maxlength="120" autocomplete="off">
       </div>
       <div class="field" id="fieldTeam" hidden>
         <label data-i18n="apply.student.team">Would you like to become part of the Future Talent team?</label>
-        <div class="yn-toggle">
-          <button type="button" class="yn-opt" data-yn="yes" aria-pressed="false"><span data-i18n="apply.yes">Yes</span></button>
-          <button type="button" class="yn-opt" data-yn="no" aria-pressed="false"><span data-i18n="apply.no">No</span></button>
+        <div class="team-options" id="teamOptions">
+          <button type="button" class="team-opt" data-team="ambassador" aria-pressed="false"><span class="check"><svg class="icon"><use href="#i-check"/></svg></span><span data-i18n="apply.student.team.ambassador">Yes, I want to be a Student Ambassador</span></button>
+          <button type="button" class="team-opt" data-team="projects" aria-pressed="false"><span class="check"><svg class="icon"><use href="#i-check"/></svg></span><span data-i18n="apply.student.team.projects">Yes, I want to take part in projects</span></button>
+          <button type="button" class="team-opt" data-team="events" aria-pressed="false"><span class="check"><svg class="icon"><use href="#i-check"/></svg></span><span data-i18n="apply.student.team.events">Yes, I want to help organize events</span></button>
+          <button type="button" class="team-opt" data-team="volunteer" aria-pressed="false"><span class="check"><svg class="icon"><use href="#i-check"/></svg></span><span data-i18n="apply.student.team.volunteer">Yes, I want to volunteer</span></button>
+          <button type="button" class="team-opt" data-team="research" aria-pressed="false"><span class="check"><svg class="icon"><use href="#i-check"/></svg></span><span data-i18n="apply.student.team.research">Yes, I want to take part in research / analytics</span></button>
+          <button type="button" class="team-opt" data-team="attend" aria-pressed="false"><span class="check"><svg class="icon"><use href="#i-check"/></svg></span><span data-i18n="apply.student.team.attend">For now, I just want to attend events</span></button>
+          <button type="button" class="team-opt" data-team="unsure" aria-pressed="false"><span class="check"><svg class="icon"><use href="#i-check"/></svg></span><span data-i18n="apply.student.team.unsure">I'm not sure yet</span></button>
         </div>
         <input type="hidden" id="applyTeam" name="team">
       </div>
@@ -1159,20 +1157,14 @@
       'apply.student.year.y4':'4th year',
       'apply.student.year.masters':"Master's",
       'apply.student.field':'What field are you currently studying?',
-      'apply.student.field.it':'IT / Data / AI / Cybersecurity',
-      'apply.student.field.finance':'Finance / Economics',
-      'apply.student.field.business':'Business / Management',
-      'apply.student.field.marketing':'Marketing / Communications',
-      'apply.student.field.law':'Law',
-      'apply.student.field.ir':'International Relations',
-      'apply.student.field.engineering':'Engineering / Technology',
-      'apply.student.field.medicine':'Medicine / Biology',
-      'apply.student.field.humanities':'Humanities',
-      'apply.student.field.other':'Other',
-      'apply.student.fieldOther':'Please specify your field',
       'apply.student.team':'Would you like to become part of the Future Talent team?',
-      'apply.yes':'Yes',
-      'apply.no':'No',
+      'apply.student.team.ambassador':'Yes, I want to be a Student Ambassador',
+      'apply.student.team.projects':'Yes, I want to take part in projects',
+      'apply.student.team.events':'Yes, I want to help organize events',
+      'apply.student.team.volunteer':'Yes, I want to volunteer',
+      'apply.student.team.research':'Yes, I want to take part in research / analytics',
+      'apply.student.team.attend':'For now, I just want to attend events',
+      'apply.student.team.unsure':"I'm not sure yet",
       'apply.err.select':'Please answer all questions above.',
       'meta.title':'Future Talent Association',
       'meta.description':'Future Talent Association connects students, universities, business and experts to create real opportunities and shape the future of work in Kazakhstan and Central Asia.'
@@ -1276,20 +1268,14 @@
       'apply.student.year.y4':'4 курс',
       'apply.student.year.masters':'Магистратура',
       'apply.student.field':'В какой сфере вы сейчас учитесь?',
-      'apply.student.field.it':'IT / Data / AI / Cybersecurity',
-      'apply.student.field.finance':'Финансы / экономика',
-      'apply.student.field.business':'Бизнес / менеджмент',
-      'apply.student.field.marketing':'Маркетинг / коммуникации',
-      'apply.student.field.law':'Право',
-      'apply.student.field.ir':'Международные отношения',
-      'apply.student.field.engineering':'Инженерия / технологии',
-      'apply.student.field.medicine':'Медицина / биология',
-      'apply.student.field.humanities':'Гуманитарные науки',
-      'apply.student.field.other':'Другое',
-      'apply.student.fieldOther':'Укажите вашу сферу',
       'apply.student.team':'Хотели бы стать частью команды Future Talent?',
-      'apply.yes':'Да',
-      'apply.no':'Нет',
+      'apply.student.team.ambassador':'Да, хочу быть Student Ambassador',
+      'apply.student.team.projects':'Да, хочу участвовать в проектах',
+      'apply.student.team.events':'Да, хочу помогать организовывать мероприятия',
+      'apply.student.team.volunteer':'Да, хочу быть волонтером',
+      'apply.student.team.research':'Да, хочу участвовать в research / аналитике',
+      'apply.student.team.attend':'Пока хочу просто посещать мероприятия',
+      'apply.student.team.unsure':'Пока не знаю',
       'apply.err.select':'Пожалуйста, ответьте на все вопросы выше.',
       'meta.title':'Future Talent Association',
       'meta.description':'Future Talent Association объединяет студентов, университеты, бизнес и экспертов, создавая реальные возможности и формируя будущее рынка труда в Казахстане и Центральной Азии.'
@@ -1393,20 +1379,14 @@
       'apply.student.year.y4':'4 курс',
       'apply.student.year.masters':'Магистратура',
       'apply.student.field':'Қазір қай салада білім алып жатырсыз?',
-      'apply.student.field.it':'IT / Data / AI / Cybersecurity',
-      'apply.student.field.finance':'Қаржы / экономика',
-      'apply.student.field.business':'Бизнес / менеджмент',
-      'apply.student.field.marketing':'Маркетинг / коммуникация',
-      'apply.student.field.law':'Құқық',
-      'apply.student.field.ir':'Халықаралық қатынастар',
-      'apply.student.field.engineering':'Инженерия / технология',
-      'apply.student.field.medicine':'Медицина / биология',
-      'apply.student.field.humanities':'Гуманитарлық ғылымдар',
-      'apply.student.field.other':'Басқа',
-      'apply.student.fieldOther':'Саланы көрсетіңіз',
       'apply.student.team':'Future Talent командасының мүшесі болғыңыз келе ме?',
-      'apply.yes':'Иә',
-      'apply.no':'Жоқ',
+      'apply.student.team.ambassador':'Иә, Student Ambassador болғым келеді',
+      'apply.student.team.projects':'Иә, жобаларға қатысқым келеді',
+      'apply.student.team.events':'Иә, іс-шараларды ұйымдастыруға көмектескім келеді',
+      'apply.student.team.volunteer':'Иә, волонтер болғым келеді',
+      'apply.student.team.research':'Иә, зерттеу / аналитикаға қатысқым келеді',
+      'apply.student.team.attend':'Әзірге тек іс-шараларға қатысқым келеді',
+      'apply.student.team.unsure':'Әзірге білмеймін',
       'apply.err.select':'Жоғарыдағы барлық сұрақтарға жауап беріңіз.',
       'meta.title':'Future Talent Association',
       'meta.description':'Future Talent Association студенттерді, университеттерді, бизнесті және сарапшыларды біріктіріп, Қазақстан мен Орталық Азияда нақты мүмкіндіктер жасап, еңбек нарығының болашағын қалыптастырады.'
@@ -1562,25 +1542,40 @@
   var fieldUniversity = document.getElementById('fieldUniversity');
   var fieldYear = document.getElementById('fieldYear');
   var fieldField = document.getElementById('fieldField');
-  var fieldFieldOther = document.getElementById('fieldFieldOther');
   var fieldTeam = document.getElementById('fieldTeam');
   var universityInput = document.getElementById('applyUniversity');
   var yearSelect = document.getElementById('applyYear');
-  var fieldSelect = document.getElementById('applyField');
-  var fieldOtherInput = document.getElementById('applyFieldOther');
+  var fieldInput = document.getElementById('applyField');
   var teamInput = document.getElementById('applyTeam');
-  var ynButtons = document.querySelectorAll('.yn-opt');
+  var teamButtons = document.querySelectorAll('.team-opt');
+  var selectedTeam = [];
 
   function t(key, fallback){
     var dict = window.__ftaDict ? window.__ftaDict() : {};
     return dict[key] || fallback || key;
   }
 
-  function setYesNo(value){
-    teamInput.value = value || '';
-    ynButtons.forEach(function(btn){
-      btn.setAttribute('aria-pressed', btn.getAttribute('data-yn') === value ? 'true' : 'false');
-    });
+  function syncTeamInput(){
+    teamInput.value = selectedTeam.join(',');
+  }
+
+  function toggleTeam(btn){
+    var val = btn.getAttribute('data-team');
+    var idx = selectedTeam.indexOf(val);
+    if (idx === -1) {
+      selectedTeam.push(val);
+      btn.setAttribute('aria-pressed', 'true');
+    } else {
+      selectedTeam.splice(idx, 1);
+      btn.setAttribute('aria-pressed', 'false');
+    }
+    syncTeamInput();
+  }
+
+  function resetTeam(){
+    selectedTeam = [];
+    teamButtons.forEach(function(btn){ btn.setAttribute('aria-pressed', 'false'); });
+    teamInput.value = '';
   }
 
   function selectRole(role){
@@ -1593,7 +1588,6 @@
     fieldUniversity.hidden = !isStudent;
     fieldYear.hidden = !isStudent;
     fieldField.hidden = !isStudent;
-    fieldFieldOther.hidden = !isStudent || fieldSelect.value !== 'other';
     fieldTeam.hidden = !isStudent;
     roleError.hidden = true;
     if (role) {
@@ -1606,17 +1600,13 @@
     }
   }
 
-  fieldSelect.addEventListener('change', function(){
-    fieldFieldOther.hidden = fieldSelect.value !== 'other';
-  });
-  ynButtons.forEach(function(btn){
-    btn.addEventListener('click', function(){ setYesNo(btn.getAttribute('data-yn')); });
+  teamButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){ toggleTeam(btn); });
   });
 
   function resetForm(){
     form.reset();
-    setYesNo(null);
-    fieldFieldOther.hidden = true;
+    resetTeam();
     errorBox.hidden = true;
     successBox.hidden = true;
     form.hidden = true;
@@ -1678,10 +1668,12 @@
     var university = universityInput.value.trim();
     var yearValue = yearSelect.value;
     var yearLabel = yearSelect.options[yearSelect.selectedIndex] ? yearSelect.options[yearSelect.selectedIndex].textContent : '';
-    var fieldValue = fieldSelect.value;
-    var fieldLabel = fieldSelect.options[fieldSelect.selectedIndex] ? fieldSelect.options[fieldSelect.selectedIndex].textContent : '';
-    var fieldOther = fieldOtherInput.value.trim();
-    var team = teamInput.value;
+    var fieldValue = fieldInput.value.trim();
+    var teamLabels = Array.prototype.filter.call(teamButtons, function(btn){
+      return selectedTeam.indexOf(btn.getAttribute('data-team')) !== -1;
+    }).map(function(btn){
+      return btn.querySelector('span:last-child').textContent.trim();
+    }).join('; ');
 
     if (isStudent) {
       if (university.length < 2) {
@@ -1696,13 +1688,13 @@
         yearSelect.focus();
         return;
       }
-      if (!fieldValue || (fieldValue === 'other' && fieldOther.length < 2)) {
+      if (fieldValue.length < 2) {
         errorBox.textContent = t('apply.err.select', 'Please answer all questions above.');
         errorBox.hidden = false;
-        (fieldValue === 'other' ? fieldOtherInput : fieldSelect).focus();
+        fieldInput.focus();
         return;
       }
-      if (!team) {
+      if (selectedTeam.length === 0) {
         errorBox.textContent = t('apply.err.select', 'Please answer all questions above.');
         errorBox.hidden = false;
         return;
@@ -1734,8 +1726,8 @@
         companyName: role === 'partner' ? companyInput.value.trim() : '',
         university: isStudent ? university : '',
         year: isStudent ? yearLabel : '',
-        field: isStudent ? (fieldValue === 'other' ? fieldOther : fieldLabel) : '',
-        team: isStudent ? (team === 'yes' ? t('apply.yes', 'Yes') : t('apply.no', 'No')) : '',
+        field: isStudent ? fieldValue : '',
+        team: isStudent ? teamLabels : '',
         website: websiteInput.value,
         lang: document.documentElement.lang,
         page: location.href
