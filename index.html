@@ -473,6 +473,9 @@
     .hero-copy p{font-size:1rem;max-width:36ch}
     .founding-banner{min-height:520px}
 
+    #top .hero-ctas{position:absolute;left:clamp(20px,5vw,64px);bottom:1.7rem;margin-top:0;z-index:3}
+    #top .hero-ctas .btn{width:auto}
+
     .btn{min-height:44px}
     .section{padding-block:clamp(2.8rem,8vw,4rem)}
     .section-head{margin-bottom:1.8rem}
@@ -1478,18 +1481,34 @@
 (function(){
   var banner = document.getElementById('top');
   var copy = banner ? banner.querySelector('.hero-copy') : null;
+  var ctas = banner ? banner.querySelector('.hero-ctas') : null;
   if (!banner || !copy) return;
+
+  var CTA_BOTTOM_GAP = 28; // px clearance above the wedge corner
 
   function updateHeroFade(){
     if (window.innerWidth > 760) {
       banner.style.removeProperty('--hero-fade-0');
       banner.style.removeProperty('--hero-fade-1');
       banner.style.removeProperty('--hero-fade-2');
+      if (ctas) { ctas.style.top = ''; ctas.style.bottom = ''; }
       return;
     }
     var bannerRect = banner.getBoundingClientRect();
     var copyRect = copy.getBoundingClientRect();
     if (bannerRect.height <= 0) return;
+    // The button sits absolutely within .hero-inner, whose own box only
+    // spans the text content (align-items:flex-start on mobile), so a CSS
+    // `bottom` percentage resolves against that short box, not the photo.
+    // `top` in real pixels always measures from hero-inner's top edge,
+    // which coincides with the banner's top edge, so it reaches the true
+    // bottom of the photo regardless of text length/language.
+    if (ctas) {
+      var ctasHeight = ctas.offsetHeight;
+      var topPx = bannerRect.height - CTA_BOTTOM_GAP - ctasHeight;
+      ctas.style.bottom = 'auto';
+      ctas.style.top = Math.max(copyRect.bottom - bannerRect.top + 16, topPx) + 'px';
+    }
     var bottomPct = ((copyRect.bottom - bannerRect.top) / bannerRect.height) * 100;
     var fade0 = Math.min(78, Math.max(40, bottomPct + 4));
     // Scale the haze-to-clear transition to whatever space is left below the
