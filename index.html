@@ -461,9 +461,9 @@
     .founding-banner .hero-photo{object-position:62% 24%}
     .hero-banner::before{
       background:linear-gradient(180deg,
-        var(--bg) 0%, var(--bg) 48%,
-        color-mix(in srgb, var(--bg) 55%, transparent) 64%,
-        transparent 90%);
+        var(--bg) 0%, var(--bg) var(--hero-fade-0, 48%),
+        color-mix(in srgb, var(--bg) 55%, transparent) var(--hero-fade-1, 64%),
+        transparent var(--hero-fade-2, 90%));
     }
     .hero-banner::after{clip-path:polygon(0 88%,100% 70%,100% 100%,0 100%);opacity:.92}
     .hero-inner{padding-block:1.9rem 2rem}
@@ -1436,6 +1436,7 @@
       opt.setAttribute('aria-current', opt.getAttribute('data-lang') === lang ? 'true' : 'false');
     });
     try { localStorage.setItem(LANG_KEY, lang); } catch(e){}
+    if (window.__updateHeroFade) requestAnimationFrame(window.__updateHeroFade);
   }
 
   function closeLangMenu(){
@@ -1468,6 +1469,45 @@
     if (saved && translations[saved]) initial = saved;
   } catch(e){}
   applyLang(initial);
+})();
+</script>
+
+<script>
+(function(){
+  var banner = document.getElementById('top');
+  var copy = banner ? banner.querySelector('.hero-copy') : null;
+  if (!banner || !copy) return;
+
+  function updateHeroFade(){
+    if (window.innerWidth > 760) {
+      banner.style.removeProperty('--hero-fade-0');
+      banner.style.removeProperty('--hero-fade-1');
+      banner.style.removeProperty('--hero-fade-2');
+      return;
+    }
+    var bannerRect = banner.getBoundingClientRect();
+    var copyRect = copy.getBoundingClientRect();
+    if (bannerRect.height <= 0) return;
+    var bottomPct = ((copyRect.bottom - bannerRect.top) / bannerRect.height) * 100;
+    var fade0 = Math.min(82, Math.max(40, bottomPct + 4));
+    banner.style.setProperty('--hero-fade-0', fade0.toFixed(1) + '%');
+    banner.style.setProperty('--hero-fade-1', Math.min(92, fade0 + 16).toFixed(1) + '%');
+    banner.style.setProperty('--hero-fade-2', Math.min(98, fade0 + 42).toFixed(1) + '%');
+  }
+
+  window.__updateHeroFade = updateHeroFade;
+  updateHeroFade();
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(updateHeroFade);
+  }
+  window.addEventListener('load', updateHeroFade);
+
+  var resizeTimer = null;
+  window.addEventListener('resize', function(){
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(updateHeroFade, 120);
+  });
 })();
 </script>
 
