@@ -1489,10 +1489,17 @@
     var copyRect = copy.getBoundingClientRect();
     if (bannerRect.height <= 0) return;
     var bottomPct = ((copyRect.bottom - bannerRect.top) / bannerRect.height) * 100;
-    var fade0 = Math.min(82, Math.max(40, bottomPct + 4));
+    var fade0 = Math.min(78, Math.max(40, bottomPct + 4));
+    // Scale the haze-to-clear transition to whatever space is left below the
+    // text, instead of a fixed point-delta - otherwise a long translation
+    // that pushes fade0 up leaves almost no room for a crisp "clear" zone
+    // and the whole visible strip reads as a hazy wash (see regression).
+    var remaining = 100 - fade0;
+    var fade1 = fade0 + remaining * 0.32;
+    var fade2 = fade0 + remaining * 0.82;
     banner.style.setProperty('--hero-fade-0', fade0.toFixed(1) + '%');
-    banner.style.setProperty('--hero-fade-1', Math.min(92, fade0 + 16).toFixed(1) + '%');
-    banner.style.setProperty('--hero-fade-2', Math.min(98, fade0 + 42).toFixed(1) + '%');
+    banner.style.setProperty('--hero-fade-1', fade1.toFixed(1) + '%');
+    banner.style.setProperty('--hero-fade-2', fade2.toFixed(1) + '%');
   }
 
   window.__updateHeroFade = updateHeroFade;
